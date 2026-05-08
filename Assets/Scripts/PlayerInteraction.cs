@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class PlayerInteraction : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class PlayerInteraction : MonoBehaviour
     private Vector3 activeToolPosition;
     private Vector3 activeToolRotation;
     public float toolEquipSpeed = 10f;
+    private Vector3 toolAnimOffset = Vector3.zero;
 
     void Update()
     {
@@ -48,6 +50,15 @@ public class PlayerInteraction : MonoBehaviour
             if (heldObject == null)
             {
                 TryInteractEnvironment();
+            }
+            else
+            {
+                IronPoker poker = heldObject.GetComponent<IronPoker>();
+                if (poker != null)
+                {
+                    poker.TryPoke(Camera.main.transform);
+                    StartCoroutine(PokeAnimation());
+                }
             }
         }
 
@@ -87,18 +98,37 @@ public class PlayerInteraction : MonoBehaviour
 
         if (isHoldingTool && heldObject != null)
         {
-            float distance = Vector3.Distance(heldObject.transform.localPosition, activeToolPosition);
-            if (distance > 0.001f)
-            {
-                heldObject.transform.localPosition = Vector3.Lerp(heldObject.transform.localPosition, activeToolPosition, Time.deltaTime * toolEquipSpeed);
-                heldObject.transform.localRotation = Quaternion.Slerp(heldObject.transform.localRotation, Quaternion.Euler(activeToolRotation), Time.deltaTime * toolEquipSpeed);
-            }
-            else
-            {
-                heldObject.transform.localPosition = activeToolPosition;
-                heldObject.transform.localRotation = Quaternion.Euler(activeToolRotation);
-            }
+            Vector3 targetPos = activeToolPosition + toolAnimOffset;
+
+            float currentSpeed = (toolAnimOffset != Vector3.zero) ? toolEquipSpeed * 3f : toolEquipSpeed;
+
+            heldObject.transform.localPosition = Vector3.Lerp(heldObject.transform.localPosition, targetPos, Time.deltaTime * currentSpeed);
+            heldObject.transform.localRotation = Quaternion.Slerp(heldObject.transform.localRotation, Quaternion.Euler(activeToolRotation), Time.deltaTime * currentSpeed);
         }
+
+        //if (isHoldingTool && heldObject != null)
+        //{
+        //    float distance = Vector3.Distance(heldObject.transform.localPosition, activeToolPosition);
+        //    if (distance > 0.001f)
+        //    {
+        //        heldObject.transform.localPosition = Vector3.Lerp(heldObject.transform.localPosition, activeToolPosition, Time.deltaTime * toolEquipSpeed);
+        //        heldObject.transform.localRotation = Quaternion.Slerp(heldObject.transform.localRotation, Quaternion.Euler(activeToolRotation), Time.deltaTime * toolEquipSpeed);
+        //    }
+        //    else
+        //    {
+        //        heldObject.transform.localPosition = activeToolPosition;
+        //        heldObject.transform.localRotation = Quaternion.Euler(activeToolRotation);
+        //    }
+        //}
+    }
+
+    IEnumerator PokeAnimation()
+    {
+        toolAnimOffset = new Vector3(0f, 0f, 0.8f);
+
+        yield return new WaitForSeconds(0.15f);
+
+        toolAnimOffset = Vector3.zero;
     }
 
     void TryHoldBag()
@@ -197,7 +227,6 @@ public class PlayerInteraction : MonoBehaviour
     {
         heldObject = pickObj;
         heldObjRb = pickObj.GetComponent<Rigidbody>();
-
         heldObjColliders = pickObj.GetComponentsInChildren<Collider>();
 
         if (pickObj.CompareTag("Tool"))

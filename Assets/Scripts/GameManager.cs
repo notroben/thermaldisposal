@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public GameObject scannerTool;
     public TextMeshProUGUI clipboardHeaderText;
     public ConveyorBelt conveyorBelt;
+    public GameObject ironPoker;
 
     [Header("Progress")]
     public int bagsBurnedToday = 0;
@@ -52,10 +53,8 @@ public class GameManager : MonoBehaviour
         if (conveyorBelt != null) conveyorBelt.isBroken = false;
 
         dailyQuota = (currentDay == 5) ? 11 : 10;
-        if (day5ExtraTaskRow != null)
-        {
-            day5ExtraTaskRow.SetActive(currentDay == 5);
-        }
+        if (day5ExtraTaskRow != null) day5ExtraTaskRow.SetActive(currentDay == 5);
+        if (ironPoker != null) ironPoker.SetActive(currentDay >= 6);
 
         if (currentDay == 1)
         {
