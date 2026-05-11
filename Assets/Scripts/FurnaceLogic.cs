@@ -8,6 +8,7 @@ public class FurnaceLogic : MonoBehaviour
 
     [Header("Furnace State")]
     public bool isDoorClosed = false;
+    private bool endingTriggered = false;
 
     [Header("Day 6 Incomplete Combustion")]
     public GameObject[] day6CharredDebrisPrefabs;
@@ -111,8 +112,31 @@ public class FurnaceLogic : MonoBehaviour
         }
     }
 
+    public void SetDoorState(bool closedState)
+    {
+        isDoorClosed = closedState;
+
+        if (gameManager.currentDay >= 7 && isDoorClosed && !endingTriggered)
+        {
+            foreach (GameObject item in itemsInside)
+            {
+                if (item != null && item.CompareTag("Player"))
+                {
+                    endingTriggered = true;
+                    TriggerEndingSequence();
+                    break;
+                }
+            }
+        }
+    }
+
     void TriggerEndingSequence()
     {
-        Debug.Log("THERMAL DISPOSAL: INITIATED. GAME OVER."); // basically end screen, will be polished later
+        Debug.Log("THERMAL DISPOSAL: INITIATED. GAME OVER.");
+
+        if (gameManager != null)
+        {
+            gameManager.TriggerTrueEnding();
+        }
     }
 }

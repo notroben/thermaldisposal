@@ -76,12 +76,14 @@ public class ExitDoor : MonoBehaviour
 
         if (gameManager.fatalRuleBroken)
         {
+            GameManager.globalDay = 8;
             Debug.Log("LOADING EXECUTION SHIFT... " + gameManager.ruleBreakReason);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         else
         {
-            GameManager.globalDay++;
-            Debug.Log("LOADING DAY " + GameManager.globalDay + "...");
+            gameManager.currentDay++;
+            Debug.Log("LOADING DAY " + gameManager.currentDay + "...");
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }

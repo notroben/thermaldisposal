@@ -211,7 +211,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         isDoorOpen = !isDoorOpen;
         FurnaceLogic furnace = FindFirstObjectByType<FurnaceLogic>();
-        if (furnace != null) furnace.isDoorClosed = !isDoorOpen;
+        if (furnace != null) furnace.SetDoorState(!isDoorOpen);
     }
 
     void FixedUpdate()

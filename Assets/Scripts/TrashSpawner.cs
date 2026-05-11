@@ -54,6 +54,7 @@ public class TrashSpawner : MonoBehaviour
 
     void Update()
     {
+        if (gameManager != null && gameManager.currentDay >= 7) return;
         if (bagsSpawned < maxBags)
         {
             timer += Time.deltaTime;

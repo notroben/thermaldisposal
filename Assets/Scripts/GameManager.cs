@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +18,13 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI clipboardHeaderText;
     public ConveyorBelt conveyorBelt;
     public GameObject ironPoker;
+    public GameObject taskListContainer;
+    public GameObject exitDoorObject;
+
+    [Header("Day 8 (Execution)")]
+    public GameObject alarmSystem;
+    public GameObject gameOverCanvas;
+    public TextMeshProUGUI gameOverReasonText;
 
     [Header("Progress")]
     public int bagsBurnedToday = 0;
@@ -27,6 +35,7 @@ public class GameManager : MonoBehaviour
     public int uiCrossedOutCount = 0;
 
     [Header("Game Over Tracking")]
+    public static string globalRuleBreakReason = "";
     public bool fatalRuleBroken = false;
     public string ruleBreakReason = "";
 
@@ -45,6 +54,9 @@ public class GameManager : MonoBehaviour
             currentDay = globalDay;
         }
 
+        ruleBreakReason = globalRuleBreakReason;
+        if (ruleBreakReason != "") fatalRuleBroken = true;
+
         SetupMorningShift();
     }
 
@@ -55,43 +67,69 @@ public class GameManager : MonoBehaviour
         dailyQuota = (currentDay == 5) ? 11 : 10;
         if (day5ExtraTaskRow != null) day5ExtraTaskRow.SetActive(currentDay == 5);
         if (ironPoker != null) ironPoker.SetActive(currentDay >= 6);
+        if (taskListContainer != null) taskListContainer.SetActive(currentDay < 7);
+        if (exitDoorObject != null) exitDoorObject.SetActive(currentDay < 7);
+
+        if (currentDay == 8)
+        {
+            if (scannerTool != null) scannerTool.SetActive(false);
+            if (clipboardHeaderText != null) clipboardHeaderText.transform.parent.gameObject.SetActive(false);
+
+            StartCoroutine(ExecutionRoutine());
+            return;
+        }
 
         if (currentDay == 1)
         {
             if (scannerTool != null) scannerTool.SetActive(false);
-            if (clipboardHeaderText != null) clipboardHeaderText.text = "DAY 1 TASK:\nIncinerate 10 Trash Bags.";
+            if (clipboardHeaderText != null) clipboardHeaderText.text = "DAY 1 DIRECTIVE:\nProcess 10 standard disposal units. Accurate weight logging is mandatory.";
         }
         else if (currentDay == 2)
         {
             if (scannerTool != null) scannerTool.SetActive(true);
-            if (clipboardHeaderText != null) clipboardHeaderText.text = "DAY 2 TASK:\nIncinerate 10 bags with NO METAL. Use the SCANNER.";
+            if (clipboardHeaderText != null) clipboardHeaderText.text = "DAY 2 DIRECTIVE:\nProcess 10 disposal units. Use SCANNER to ensure zero metallic contaminants prior to thermal destruction.";
         }
         else if (currentDay == 3)
         {
             if (scannerTool != null) scannerTool.SetActive(true);
-            if (clipboardHeaderText != null) clipboardHeaderText.text = "DAY 3 TASK:\nIncinerate 10 bags. CONVEYOR is currently under maintenance.";
+            if (clipboardHeaderText != null) clipboardHeaderText.text = "DAY 3 DIRECTIVE:\nProcess 10 disposal units. Automated delivery system is offline. Manual retrieval from the chute is required.";
             if (conveyorBelt != null) conveyorBelt.isBroken = true;
         }
         else if (currentDay == 4)
         {
             if (scannerTool != null) scannerTool.SetActive(true);
-            if (clipboardHeaderText != null) clipboardHeaderText.text = "DAY 4 TASK:\nIncinerate 10 bags. IMPORTANT: Ignore acoustics, they are just trapped gases escaping.";
+            if (clipboardHeaderText != null) clipboardHeaderText.text = "DAY 4 DIRECTIVE:\nProcess 10 disposal units. NOTE: Acoustic anomalies during combustion are strictly expanding air pockets. Do not report them.";
         }
         else if (currentDay == 5)
         {
             if (scannerTool != null) scannerTool.SetActive(true);
-            if (clipboardHeaderText != null) clipboardHeaderText.text = "DAY 5 TASK:\nIncinerate 10 bags. IMPORTANT: Move excess trash from OVER_CAPACITY bags into 1 empty bag.";
+            if (clipboardHeaderText != null) clipboardHeaderText.text = "DAY 5 DIRECTIVE:\nProcess 10 disposal units. NOTE: Manually extract excess mass from OVER_CAPACITY units and consolidate into the overflow unit.";
         }
         else if (currentDay == 6)
         {
             if (scannerTool != null) scannerTool.SetActive(true);
-            if (clipboardHeaderText != null) clipboardHeaderText.text = "DAY 6 TASK:\nIncinerate 10 bags. IMPORTANT: Clear out unburned trash in the furnace with the IRON POKER.";
+            if (clipboardHeaderText != null) clipboardHeaderText.text = "DAY 6 DIRECTIVE:\nProcess 10 disposal units. Suboptimal combustion detected. Pulverize all carbonized remains with the IRON POKER between incineration cycles.";
         }
-        else if (currentDay >= 7)
+        else if (currentDay == 7)
         {
             if (scannerTool != null) scannerTool.SetActive(true);
-            if (clipboardHeaderText != null) clipboardHeaderText.text = "DAY 7 TASK:\nIncinerate 1 trash.";
+            if (clipboardHeaderText != null) clipboardHeaderText.text = "DAY 7 DIRECTIVE:\nProcess the final unit.";
         }
+    }
+
+    IEnumerator ExecutionRoutine()
+    {
+        if (alarmSystem != null) alarmSystem.SetActive(true);
+        if (gameOverCanvas != null) gameOverCanvas.SetActive(false);
+
+        Debug.Log("AUDIO: alarm playing");
+
+        yield return new WaitForSeconds(8f);
+
+        if (gameOverCanvas != null) gameOverCanvas.SetActive(true);
+        if (gameOverReasonText != null) gameOverReasonText.text = ruleBreakReason;
+
+        Time.timeScale = 0f;
     }
 
     public void AddBurnedBag(TrashBag_data bagData)
@@ -105,6 +143,7 @@ public class GameManager : MonoBehaviour
     {
         fatalRuleBroken = true;
         ruleBreakReason = reason;
+        globalRuleBreakReason = reason;
         Debug.Log("FATAL ERROR LOGGED: " + reason);
     }
 
@@ -115,5 +154,23 @@ public class GameManager : MonoBehaviour
         {
             TriggerFutureGameOver("Missing Documentation: Material incinerated prior to logging checklist.");
         }
+    }
+    public void TriggerTrueEnding()
+    {
+        StartCoroutine(TrueEndingRoutine());
+    }
+    IEnumerator TrueEndingRoutine()
+    {
+        Debug.Log("AUDIO: furnace roar");
+
+        yield return new WaitForSeconds(2f);
+
+        if (gameOverCanvas != null) gameOverCanvas.SetActive(true);
+        if (gameOverReasonText != null)
+        {
+            gameOverReasonText.text = "THERMAL DISPOSAL COMPLETE.\nThank you for your service to The Company.";
+        }
+
+        Time.timeScale = 0f;
     }
 }
