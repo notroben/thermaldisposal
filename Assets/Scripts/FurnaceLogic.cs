@@ -91,7 +91,7 @@ public class FurnaceLogic : MonoBehaviour
 
                 gameManager.AddBurnedBag(bagData);
 
-                if (gameManager.currentDay == 6 && day6CharredDebrisPrefabs.Length > 0)
+                if (gameManager.CurrentDayData != null && gameManager.CurrentDayData.hasCharredDebris && day6CharredDebrisPrefabs.Length > 0)
                 {
                     for (int j = 0; j < 2; j++)
                     {
@@ -116,7 +116,7 @@ public class FurnaceLogic : MonoBehaviour
     {
         isDoorClosed = closedState;
 
-        if (gameManager.currentDay >= 7 && isDoorClosed && !endingTriggered)
+        if (gameManager.CurrentDayData != null && gameManager.CurrentDayData.isFinalDay && isDoorClosed && !endingTriggered)
         {
             foreach (GameObject item in itemsInside)
             {

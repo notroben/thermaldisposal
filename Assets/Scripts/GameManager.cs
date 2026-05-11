@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public static int globalDay = 1;
     public int currentDay = 1;
     public int dailyQuota = 10;
+    public DayData[] dayConfigs;
+    public DayData CurrentDayData => (dayConfigs != null && currentDay <= dayConfigs.Length && currentDay > 0) ? dayConfigs[currentDay - 1] : null;
 
     [Header("Testing & Debug")]
     [Tooltip("Check this box to force the game to start on the Current Day number below")]
@@ -62,15 +64,22 @@ public class GameManager : MonoBehaviour
 
     void SetupMorningShift()
     {
-        if (conveyorBelt != null) conveyorBelt.isBroken = false;
+        DayData config = CurrentDayData;
+        if (config == null)
+        {
+            Debug.LogWarning("No DayData assigned for current day: " + currentDay);
+            return;
+        }
 
-        dailyQuota = (currentDay == 5) ? 11 : 10;
-        if (day5ExtraTaskRow != null) day5ExtraTaskRow.SetActive(currentDay == 5);
-        if (ironPoker != null) ironPoker.SetActive(currentDay >= 6);
-        if (taskListContainer != null) taskListContainer.SetActive(currentDay < 7);
-        if (exitDoorObject != null) exitDoorObject.SetActive(currentDay < 7);
+        if (conveyorBelt != null) conveyorBelt.isBroken = config.conveyorBroken;
 
-        if (currentDay == 8)
+        dailyQuota = config.dailyQuota;
+        if (day5ExtraTaskRow != null) day5ExtraTaskRow.SetActive(config.showDay5ExtraTask);
+        if (ironPoker != null) ironPoker.SetActive(config.unlockIronPoker);
+        if (taskListContainer != null) taskListContainer.SetActive(config.showTaskList);
+        if (exitDoorObject != null) exitDoorObject.SetActive(config.showExitDoor);
+
+        if (config.isExecutionDay)
         {
             if (scannerTool != null) scannerTool.SetActive(false);
             if (clipboardHeaderText != null) clipboardHeaderText.transform.parent.gameObject.SetActive(false);
@@ -79,42 +88,8 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (currentDay == 1)
-        {
-            if (scannerTool != null) scannerTool.SetActive(false);
-            if (clipboardHeaderText != null) clipboardHeaderText.text = "DAY 1 DIRECTIVE:\nProcess 10 standard disposal units. Accurate weight logging is mandatory.";
-        }
-        else if (currentDay == 2)
-        {
-            if (scannerTool != null) scannerTool.SetActive(true);
-            if (clipboardHeaderText != null) clipboardHeaderText.text = "DAY 2 DIRECTIVE:\nProcess 10 disposal units. Use SCANNER to ensure zero metallic contaminants prior to thermal destruction.";
-        }
-        else if (currentDay == 3)
-        {
-            if (scannerTool != null) scannerTool.SetActive(true);
-            if (clipboardHeaderText != null) clipboardHeaderText.text = "DAY 3 DIRECTIVE:\nProcess 10 disposal units. Automated delivery system is offline. Manual retrieval from the chute is required.";
-            if (conveyorBelt != null) conveyorBelt.isBroken = true;
-        }
-        else if (currentDay == 4)
-        {
-            if (scannerTool != null) scannerTool.SetActive(true);
-            if (clipboardHeaderText != null) clipboardHeaderText.text = "DAY 4 DIRECTIVE:\nProcess 10 disposal units. NOTE: Acoustic anomalies during combustion are strictly expanding air pockets. Do not report them.";
-        }
-        else if (currentDay == 5)
-        {
-            if (scannerTool != null) scannerTool.SetActive(true);
-            if (clipboardHeaderText != null) clipboardHeaderText.text = "DAY 5 DIRECTIVE:\nProcess 10 disposal units. NOTE: Manually extract excess mass from OVER_CAPACITY units and consolidate into the overflow unit.";
-        }
-        else if (currentDay == 6)
-        {
-            if (scannerTool != null) scannerTool.SetActive(true);
-            if (clipboardHeaderText != null) clipboardHeaderText.text = "DAY 6 DIRECTIVE:\nProcess 10 disposal units. Suboptimal combustion detected. Pulverize all carbonized remains with the IRON POKER between incineration cycles.";
-        }
-        else if (currentDay == 7)
-        {
-            if (scannerTool != null) scannerTool.SetActive(true);
-            if (clipboardHeaderText != null) clipboardHeaderText.text = "DAY 7 DIRECTIVE:\nProcess the final unit.";
-        }
+        if (scannerTool != null) scannerTool.SetActive(config.unlockScanner);
+        if (clipboardHeaderText != null) clipboardHeaderText.text = config.directiveText;
     }
 
     IEnumerator ExecutionRoutine()

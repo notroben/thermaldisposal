@@ -19,24 +19,26 @@ public class TrashSpawner : MonoBehaviour
     private int bagsSpawned = 0;
     private GameManager gameManager;
 
-    private List<int> day4OrganicIndices = new List<int>();
-    private List<int> day5OverCapacityIndices = new List<int>();
+    private List<int> randomOrganicIndices = new List<int>();
+    private List<int> randomOverCapacityIndices = new List<int>();
 
     void Start()
     {
         gameManager = FindFirstObjectByType<GameManager>();
 
-        if (gameManager != null)
+        if (gameManager != null && gameManager.CurrentDayData != null)
         {
-            if (gameManager.currentDay == 4) GenerateRandomIndices(day4OrganicIndices, 3);
-            if (gameManager.currentDay == 5)
-            {
-                GenerateRandomIndices(day5OverCapacityIndices, 5);
+            DayData config = gameManager.CurrentDayData;
+            
+            if (config.randomOrganicCount > 0) 
+                GenerateRandomIndices(randomOrganicIndices, config.randomOrganicCount);
+                
+            if (config.randomOverCapacityCount > 0)
+                GenerateRandomIndices(randomOverCapacityIndices, config.randomOverCapacityCount);
 
-                if (emptyBagPrefab != null && emptyBagSpawnPoint != null)
-                {
-                    Instantiate(emptyBagPrefab, emptyBagSpawnPoint.position, Quaternion.identity);
-                }
+            if (config.spawnEmptyBag && emptyBagPrefab != null && emptyBagSpawnPoint != null)
+            {
+                Instantiate(emptyBagPrefab, emptyBagSpawnPoint.position, Quaternion.identity);
             }
         }
 
@@ -54,7 +56,7 @@ public class TrashSpawner : MonoBehaviour
 
     void Update()
     {
-        if (gameManager != null && gameManager.currentDay >= 7) return;
+        if (gameManager != null && gameManager.CurrentDayData != null && (gameManager.CurrentDayData.isFinalDay || gameManager.CurrentDayData.isExecutionDay)) return;
         if (bagsSpawned < maxBags)
         {
             timer += Time.deltaTime;
@@ -74,11 +76,13 @@ public class TrashSpawner : MonoBehaviour
         bool spawnOrganic = false;
         bool spawnHeavy = false;
 
-        if (gameManager != null)
+        if (gameManager != null && gameManager.CurrentDayData != null)
         {
-            if (gameManager.currentDay == 2 && bagsSpawned == 8) spawnOrganic = true;
-            else if (gameManager.currentDay == 4 && day4OrganicIndices.Contains(bagsSpawned)) spawnOrganic = true;
-            else if (gameManager.currentDay == 5 && day5OverCapacityIndices.Contains(bagsSpawned)) spawnHeavy = true;
+            DayData config = gameManager.CurrentDayData;
+            if (config.specificOrganicIndex == bagsSpawned) spawnOrganic = true;
+            else if (randomOrganicIndices.Contains(bagsSpawned)) spawnOrganic = true;
+            
+            if (randomOverCapacityIndices.Contains(bagsSpawned)) spawnHeavy = true;
         }
 
         GameObject newBag;

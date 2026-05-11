@@ -8,6 +8,10 @@ public class PlayerInteraction : MonoBehaviour
     public float interactionDistance = 3f;
     public LayerMask interactableMask;
 
+    [Header("UI Prompts")]
+    public TMPro.TextMeshProUGUI centerPromptText;
+    public TMPro.TextMeshProUGUI bottomPromptText;
+
     [Header("Physics Grab Settings")]
     public Transform holdPosition;
     public float grabForce = 15f;
@@ -35,8 +39,16 @@ public class PlayerInteraction : MonoBehaviour
     public float toolEquipSpeed = 10f;
     private Vector3 toolAnimOffset = Vector3.zero;
 
+    private RaycastHit currentHit;
+    private bool isHitting;
+    private ExitDoor lastLookedAtExitDoor;
+
     void Update()
     {
+        Ray ray = new Ray(transform.position, transform.forward);
+        isHitting = Physics.Raycast(ray, out currentHit, interactionDistance, interactableMask);
+
+        UpdateInteractionUI();
         UpdateHoverState();
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -131,12 +143,84 @@ public class PlayerInteraction : MonoBehaviour
         toolAnimOffset = Vector3.zero;
     }
 
+    void UpdateInteractionUI()
+    {
+        if (centerPromptText != null) centerPromptText.text = "";
+        if (bottomPromptText != null) bottomPromptText.text = "";
+
+        if (heldObject != null)
+        {
+            ClipboardTool clipboard = heldObject.GetComponent<ClipboardTool>();
+            if (clipboard != null)
+            {
+                if (bottomPromptText != null)
+                {
+                    bottomPromptText.text = clipboard.isFocused ? "[M2] Unfocus | [E] Drop" : "[M1] Focus | [E] Drop";
+                }
+            }
+            else
+            {
+                IronPoker poker = heldObject.GetComponent<IronPoker>();
+                if (poker != null)
+                {
+                    if (bottomPromptText != null) bottomPromptText.text = "[M1] Poke | [E] Drop";
+                }
+                else
+                {
+                    ScannerTool scanner = heldObject.GetComponent<ScannerTool>();
+                    if (scanner != null)
+                    {
+                        if (bottomPromptText != null) bottomPromptText.text = "[Hold M1] Scan | [E] Drop";
+                    }
+                    else
+                    {
+                        if (bottomPromptText != null) bottomPromptText.text = "[E] Drop";
+                    }
+                }
+            }
+        }
+        else if (isHitting)
+        {
+            if (currentHit.collider.CompareTag("ExitDoor"))
+            {
+                if (centerPromptText != null) centerPromptText.text = "[Hold M1] Clock Out";
+            }
+            else if (currentHit.collider.CompareTag("Door"))
+            {
+                if (centerPromptText != null) centerPromptText.text = isDoorOpen ? "[M1] Close Door" : "[M1] Open Door";
+            }
+            else if (currentHit.collider.CompareTag("Switch"))
+            {
+                if (centerPromptText != null) centerPromptText.text = "[M1] Activate Furnace";
+            }
+            else
+            {
+                GameObject obj = currentHit.collider.attachedRigidbody != null ? currentHit.collider.attachedRigidbody.gameObject : currentHit.collider.gameObject;
+                TrashBag_data bag = obj.GetComponent<TrashBag_data>();
+                if (bag != null)
+                {
+                    if (bag.bagWeight == TrashBag_data.WeightCategory.OverCapacity && !bag.isSealed)
+                    {
+                        if (centerPromptText != null) centerPromptText.text = bag.isOpen ? "[Hold M1] Seal Bag" : "[Hold M1] Open Bag | [E] Pick Up";
+                    }
+                    else if (!bag.isOpen)
+                    {
+                        if (centerPromptText != null) centerPromptText.text = "[E] Pick Up";
+                    }
+                }
+                else if (obj.CompareTag("Tool") || obj.CompareTag("ExcessTrash"))
+                {
+                    if (centerPromptText != null) centerPromptText.text = "[E] Pick Up";
+                }
+            }
+        }
+    }
+
     void TryHoldBag()
     {
-        Ray ray = new Ray(transform.position, transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, interactableMask))
+        if (isHitting)
         {
-            TrashBag_data bag = hit.collider.GetComponent<TrashBag_data>();
+            TrashBag_data bag = currentHit.collider.GetComponent<TrashBag_data>();
 
             if (bag != null && bag.bagWeight == TrashBag_data.WeightCategory.OverCapacity && !bag.isSealed)
             {
@@ -156,34 +240,36 @@ public class PlayerInteraction : MonoBehaviour
 
     void UpdateHoverState()
     {
-        Ray ray = new Ray(transform.position, transform.forward);
         bool lookingAtExit = false;
 
-        if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, interactableMask))
+        if (isHitting)
         {
-            if (hit.collider.CompareTag("ExitDoor"))
+            if (currentHit.collider.CompareTag("ExitDoor"))
             {
                 lookingAtExit = true;
-                ExitDoor exit = hit.collider.GetComponent<ExitDoor>();
-                if (exit != null) exit.SetPlayerLooking(true);
+                ExitDoor exit = currentHit.collider.GetComponent<ExitDoor>();
+                if (exit != null)
+                {
+                    exit.SetPlayerLooking(true);
+                    lastLookedAtExitDoor = exit;
+                }
             }
         }
 
-        if (!lookingAtExit)
+        if (!lookingAtExit && lastLookedAtExitDoor != null)
         {
-            ExitDoor[] exits = FindObjectsByType<ExitDoor>(FindObjectsSortMode.None);
-            foreach (ExitDoor exit in exits) exit.SetPlayerLooking(false);
+            lastLookedAtExitDoor.SetPlayerLooking(false);
+            lastLookedAtExitDoor = null;
         }
     }
 
     void TryPickUp()
     {
-        Ray ray = new Ray(transform.position, transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, interactableMask))
+        if (isHitting)
         {
-            if (!hit.collider.CompareTag("Door") && !hit.collider.CompareTag("Switch") && !hit.collider.CompareTag("ExitDoor"))
+            if (!currentHit.collider.CompareTag("Door") && !currentHit.collider.CompareTag("Switch") && !currentHit.collider.CompareTag("ExitDoor"))
             {
-                GameObject objToPickUp = hit.collider.attachedRigidbody != null ? hit.collider.attachedRigidbody.gameObject : hit.collider.gameObject;
+                GameObject objToPickUp = currentHit.collider.attachedRigidbody != null ? currentHit.collider.attachedRigidbody.gameObject : currentHit.collider.gameObject;
 
                 TrashBag_data bag = objToPickUp.GetComponent<TrashBag_data>();
                 if (bag != null && bag.isOpen) return;
@@ -195,15 +281,14 @@ public class PlayerInteraction : MonoBehaviour
 
     void TryInteractEnvironment()
     {
-        Ray ray = new Ray(transform.position, transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, interactableMask))
+        if (isHitting)
         {
-            if (hit.collider.CompareTag("Switch"))
+            if (currentHit.collider.CompareTag("Switch"))
             {
                 FurnaceLogic furnace = FindFirstObjectByType<FurnaceLogic>();
                 if (furnace != null) furnace.ActivateFurnace();
             }
-            else if (hit.collider.CompareTag("Door")) ToggleDoor();
+            else if (currentHit.collider.CompareTag("Door")) ToggleDoor();
         }
     }
 

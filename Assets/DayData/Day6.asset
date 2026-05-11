@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01f81b9ecc50e7d44a0c1276c500f16a, type: 3}
+  m_Name: Day6
+  m_EditorClassIdentifier: Assembly-CSharp::DayData
+  dailyQuota: 10
+  directiveText: DAY 6 DIRECTIVE:\nProcess 10 disposal units. Suboptimal combustion
+    detected. Pulverize all carbonized remains with the IRON POKER between incineration
+    cycles.
+  conveyorBroken: 0
+  unlockScanner: 1
+  unlockIronPoker: 1
+  showTaskList: 1
+  showExitDoor: 1
+  showDay5ExtraTask: 0
+  randomOrganicCount: 0
+  specificOrganicIndex: -1
+  randomOverCapacityCount: 0
+  spawnEmptyBag: 0
+  hasCharredDebris: 1
+  isFinalDay: 0
+  isExecutionDay: 0
