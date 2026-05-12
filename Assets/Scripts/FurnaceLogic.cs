@@ -44,10 +44,12 @@ public class FurnaceLogic : MonoBehaviour
         if (!isDoorClosed)
         {
             Debug.Log("SYSTEM WARNING: Thermal Disposal unit cannot activate while safety door is ajar.");
+            if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("FurnaceError", transform.position);
             return;
         }
 
         Debug.Log("SYSTEM: Thermal Disposal unit activated. Processing...");
+        if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("FurnaceRoar", transform.position);
 
         itemsInside.RemoveAll(item => item == null || !item.activeInHierarchy || (item.GetComponent<Collider>() != null && !item.GetComponent<Collider>().enabled));
 
@@ -98,7 +100,11 @@ public class FurnaceLogic : MonoBehaviour
                     }
                 }
 
-                if (bagData.isOrganic) Debug.Log("AUDIO TRIGGER: Play organic matter scream SFX");
+                if (bagData.isOrganic)
+                {
+                    Debug.Log("AUDIO TRIGGER: Play organic matter scream SFX");
+                    if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("OrganicScream", transform.position);
+                }
 
                 if (ServiceLocator.GameManager != null) ServiceLocator.GameManager.AddBurnedBag(bagData);
 
@@ -126,6 +132,10 @@ public class FurnaceLogic : MonoBehaviour
     public void SetDoorState(bool closedState)
     {
         isDoorClosed = closedState;
+        if (ServiceLocator.AudioManager != null)
+        {
+            ServiceLocator.AudioManager.PlaySFXAtPosition(isDoorClosed ? "FurnaceDoorClose" : "FurnaceDoorOpen", transform.position);
+        }
 
         if (ServiceLocator.GameManager != null && ServiceLocator.GameManager.CurrentDayData != null && ServiceLocator.GameManager.CurrentDayData.isFinalDay && isDoorClosed && !endingTriggered)
         {

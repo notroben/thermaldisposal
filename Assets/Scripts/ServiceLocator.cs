@@ -8,6 +8,9 @@ public static class ServiceLocator
     private static PlayerController _playerController;
     public static PlayerController PlayerController => _playerController;
 
+    private static AudioManager _audioManager;
+    public static AudioManager AudioManager => _audioManager;
+
     public static void RegisterGameManager(GameManager gm)
     {
         _gameManager = gm;
@@ -16,5 +19,10 @@ public static class ServiceLocator
     public static void RegisterPlayerController(PlayerController pc)
     {
         _playerController = pc;
+    }
+
+    public static void RegisterAudioManager(AudioManager am)
+    {
+        _audioManager = am;
     }
 }

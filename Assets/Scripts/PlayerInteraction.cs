@@ -117,21 +117,6 @@ public class PlayerInteraction : MonoBehaviour
             heldObject.transform.localPosition = Vector3.Lerp(heldObject.transform.localPosition, targetPos, Time.deltaTime * currentSpeed);
             heldObject.transform.localRotation = Quaternion.Slerp(heldObject.transform.localRotation, Quaternion.Euler(activeToolRotation), Time.deltaTime * currentSpeed);
         }
-
-        //if (isHoldingTool && heldObject != null)
-        //{
-        //    float distance = Vector3.Distance(heldObject.transform.localPosition, activeToolPosition);
-        //    if (distance > 0.001f)
-        //    {
-        //        heldObject.transform.localPosition = Vector3.Lerp(heldObject.transform.localPosition, activeToolPosition, Time.deltaTime * toolEquipSpeed);
-        //        heldObject.transform.localRotation = Quaternion.Slerp(heldObject.transform.localRotation, Quaternion.Euler(activeToolRotation), Time.deltaTime * toolEquipSpeed);
-        //    }
-        //    else
-        //    {
-        //        heldObject.transform.localPosition = activeToolPosition;
-        //        heldObject.transform.localRotation = Quaternion.Euler(activeToolRotation);
-        //    }
-        //}
     }
 
     IEnumerator PokeAnimation()
@@ -234,8 +219,16 @@ public class PlayerInteraction : MonoBehaviour
 
                 if (currentBagHoldTime >= requiredBagHoldTime)
                 {
-                    if (!bag.isOpen) bag.OpenBag();
-                    else bag.SealBag();
+                    if (!bag.isOpen)
+                    {
+                        bag.OpenBag();
+                        if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("BagRip", bag.transform.position);
+                    }
+                    else
+                    {
+                        bag.SealBag();
+                        if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("BagSeal", bag.transform.position);
+                    }
 
                     currentBagHoldTime = 0f;
                 }
@@ -326,6 +319,12 @@ public class PlayerInteraction : MonoBehaviour
         heldObjRb = pickObj.GetComponent<Rigidbody>();
         heldObjColliders = pickObj.GetComponentsInChildren<Collider>();
 
+        if (ServiceLocator.AudioManager != null)
+        {
+            if (pickObj.CompareTag("Tool")) ServiceLocator.AudioManager.PlayGlobalSFX("PickupTool");
+            else ServiceLocator.AudioManager.PlayGlobalSFX("PickupBag");
+        }
+
         if (pickObj.CompareTag("Tool"))
         {
             isHoldingTool = true;
@@ -362,6 +361,12 @@ public class PlayerInteraction : MonoBehaviour
 
     void DropObject()
     {
+        if (ServiceLocator.AudioManager != null)
+        {
+            if (isHoldingTool) ServiceLocator.AudioManager.PlayGlobalSFX("DropTool");
+            else ServiceLocator.AudioManager.PlayGlobalSFX("DropBag");
+        }
+
         ClipboardTool clipboard = heldObject.GetComponent<ClipboardTool>();
         if (clipboard != null) clipboard.ToggleFocus(false);
 

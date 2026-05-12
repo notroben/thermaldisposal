@@ -21,6 +21,7 @@ public class WeightScaleReader : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         currentCollider = other;
+        if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("ScaleBeep", transform.position);
         TrashBag_data bagData = other.GetComponent<TrashBag_data>();
 
         if (bagData != null)
@@ -48,7 +49,7 @@ public class WeightScaleReader : MonoBehaviour
             }
             else
             {
-                scaleDisplay.text = "UNDER_LOAD"; // might be removed later idk
+                scaleDisplay.text = "UNDER_LOAD";
                 scaleDisplay.color = Color.yellow;
             }
         }

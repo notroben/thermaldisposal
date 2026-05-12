@@ -113,6 +113,7 @@ public class GameManager : MonoBehaviour
         if (gameOverCanvas != null) gameOverCanvas.SetActive(false);
 
         Debug.Log("AUDIO TRIGGER: Play Execution Alarm SFX");
+        if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlayGlobalSFX("ExecutionAlarm");
 
         yield return new WaitForSeconds(8f);
 
@@ -152,6 +153,7 @@ public class GameManager : MonoBehaviour
     IEnumerator TrueEndingRoutine()
     {
         Debug.Log("AUDIO TRIGGER: Play True Ending Furnace Roar SFX");
+        if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlayGlobalSFX("ExecutionFurnaceRoar");
 
         yield return new WaitForSeconds(2f);
 

@@ -28,6 +28,7 @@ public class ClipboardTask : MonoBehaviour
     public void OnCheckboxChanged(bool isChecked)
     {
         if (!isChecked) return;
+        if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlayGlobalSFX("PenScribble");
 
         if (taskIndex != gameManager.uiCheckedCount)
         {
@@ -50,6 +51,7 @@ public class ClipboardTask : MonoBehaviour
     public void ToggleBurnedStatus()
     {
         if (isBurned) return;
+        if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlayGlobalSFX("PenScribble");
 
         if (taskIndex != gameManager.uiCrossedOutCount)
         {
