@@ -53,22 +53,52 @@ The game utilizes a Day-by-day progression system, introducing new mechanics and
 
 ---
 
-## 5. Technical Architecture & Optimizations (Under the Hood)
-The codebase has been heavily optimized for performance, scalability, and clean architecture, abandoning messy singletons and hardcoded logic in favor of modern C# design patterns.
+## 5. Technical Architecture & Component Map
 
-### Data-Driven Progression (`DayData.cs`)
-Instead of massive `if/else` chains checking `currentDay`, the game uses a `ScriptableObject` system (`DayData.cs`). Each day is its own asset file that dictates quotas, tool unlocks, broken conveyor states, and specific trash spawning rules. The `GameManager` simply reads the current `DayData` asset, making it incredibly easy for designers to tweak day balances without touching code.
+The codebase has been heavily optimized for performance, scalability, and clean architecture, utilizing modern C# design patterns to ensure decoupling and efficiency.
 
-### Service Locator Pattern (`ServiceLocator.cs`)
-To eliminate the severe performance overhead of `FindFirstObjectByType<>` calls scattered across scripts, a lightweight Dependency Injection container (`ServiceLocator.cs`) is used. Core managers like the `GameManager` and `PlayerController` register themselves on `Awake()`, granting instant, zero-cost access to global state.
+### Core Managers & Systems
+- **`GameManager.cs`**
+  - **Role**: The central state machine. Tracks quotas, execution states, and honesty stats (`physicalWeighedCount`, `uiCheckedCount`, `uiCrossedOutCount`).
+  - **Relationships**: Serves as the global authority. Receives infraction reports from other scripts to trigger Game Over states.
+- **`DayData.cs` (ScriptableObject)**
+  - **Role**: Data container for day-specific progression.
+  - **Relationships**: Queried by the `GameManager` and `TrashSpawner` to dictate daily quotas, tool unlocks, broken conveyor states, and trash spawning rules without hardcoded logic.
+- **`ServiceLocator.cs`**
+  - **Role**: A Dependency Injection container.
+  - **Relationships**: `GameManager` and `PlayerController` register themselves here on `Awake()`, granting other scripts instant, zero-cost access to global state, eliminating expensive `FindObject` calls.
+- **`GameEvents.cs`**
+  - **Role**: A central C# `Action` Event Bus.
+  - **Relationships**: Severs object-to-object coupling. For example, `PlayerInteraction` invokes `OnFurnaceActivated()`, and `FurnaceLogic` listens and activates itself without either script knowing about the other.
+- **`RuleBreak.cs`**
+  - **Role**: A static constants class centralizing all Game Over triggers and "HR System" logging.
+  - **Relationships**: Used by all interactable objects to enforce a uniform, dystopian tone (e.g., `INFRACTION: Documentation logged out of chronological sequence.`).
 
-### Event-Driven Systems (`GameEvents.cs`)
-Object-to-object coupling has been severed using a central C# `Action` Event Bus. 
-- **Example:** The `PlayerInteraction` script doesn't know the `FurnaceLogic` exists. When the player clicks the furnace switch, it simply invokes `GameEvents.OnFurnaceActivated()`. The furnace listens for this event and activates itself.
+### Player Systems
+- **`PlayerController.cs`**
+  - **Role**: Handles first-person movement, looking, gravity, and crouching.
+  - **Relationships**: Registers to `ServiceLocator`. Exposes state locks (`canLook`, `canMove`) used by tools like `ClipboardTool`.
+- **`PlayerInteraction.cs`**
+  - **Role**: Handles raycast-based environment interaction (picking up physics objects, toggling switches, using tools).
+  - **Relationships**: Highly optimized to fire only **one raycast per frame**, caching the hit for hover states, pickup logic, and tool usage simultaneously, saving immense CPU overhead.
 
-### Consolidated Infractions (`RuleBreak.cs`)
-All game-over triggers are centralized in a static constants class (`RuleBreak.cs`). This enforces a uniform, dystopian "HR System" tone across the entire game (e.g., `INFRACTION: Documentation logged out of chronological sequence.`). It also drastically simplifies text editing and future localization.
+### Interactable Environment
+- **`FurnaceLogic.cs`**
+  - **Role**: The incineration zone. Tracks objects that enter/exit its trigger and processes burning.
+  - **Relationships**: Listens to `GameEvents` to open/close doors or activate. Fires `RuleBreak` events to the `GameManager` if unweighed bags or essential tools are destroyed.
+- **`WeightScaleReader.cs`**
+  - **Role**: A trigger zone that reads the `TrashBag_data` of whatever is placed on it and updates the diegetic UI display.
+  - **Relationships**: Updates `GameManager`'s physical weigh counts and ensures correct chronological sequence.
+- **`ConveyorBelt.cs`**
+  - **Role**: Moves bags into the room.
+  - **Relationships**: Uses a highly performant **Kinematic Rigidbody trick**—modifying `rb.position` and `rb.MovePosition` in `FixedUpdate`—forcing Unity's native physics engine to calculate frictionless movement for resting bags at virtually zero cost (abandoning heavy `OnCollisionStay` polling).
+- **`ExitDoor.cs`**
+  - **Role**: The shift-end mechanic.
+  - **Relationships**: Verifies quotas and paperwork with `GameManager` before advancing the day or triggering the Execution scene.
 
-### Optimized Raycasting & Physics
-- **Single-Raycast Interaction:** `PlayerInteraction.cs` fires only **one** raycast per frame, caching the hit. Hover states, pickup logic, and tool usage all share this single cached hit, saving immense CPU overhead.
-- **Kinematic Conveyor Belts:** `ConveyorBelt.cs` avoids the notoriously heavy `OnCollisionStay` polling method. Instead, it uses a Kinematic Rigidbody trick—modifying `rb.position` and `rb.MovePosition` in `FixedUpdate`—forcing Unity's native physics engine to calculate frictionless, perfectly smooth movement for all resting bags at virtually zero cost.
+### Tools & Data
+- **`TrashBag_Data.cs`**: Data container on bags tracking `WeightCategory`, `isOrganic`, `hasMetal`, and interaction states (`isOpen`, `isSealed`, `hasBeenWeighed`).
+- **`TrashSpawner.cs`**: Timer-based spawner that reads `DayData` to instantiate specific bags at specific intervals.
+- **`ScannerTool.cs`**: Raycasts forward to reveal hidden bag data (Metal/Organic) to a UI screen.
+- **`ClipboardTool.cs` & `ClipboardTask.cs`**: Manages the diegetic UI clipboard, tracking daily tasks and interacting with the `GameManager`'s honesty tracking.
+- **`IronPoker.cs`**: Used to manually destroy `DebrisLogic` objects left behind during incomplete combustion.
