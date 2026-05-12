@@ -183,7 +183,12 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (currentHit.collider.CompareTag("ExitDoor"))
             {
-                if (centerPromptText != null) centerPromptText.text = "[Hold M1] Clock Out";
+                bool canClockOut = true;
+                if (ServiceLocator.GameManager != null && ServiceLocator.GameManager.CurrentDayData != null)
+                {
+                    if (ServiceLocator.GameManager.CurrentDayData.isFinalDay || ServiceLocator.GameManager.CurrentDayData.isExecutionDay) canClockOut = false;
+                }
+                if (canClockOut && centerPromptText != null) centerPromptText.text = "[Hold M1] Clock Out";
             }
             else if (currentHit.collider.CompareTag("Door"))
             {
@@ -246,12 +251,21 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (currentHit.collider.CompareTag("ExitDoor"))
             {
-                lookingAtExit = true;
-                ExitDoor exit = currentHit.collider.GetComponent<ExitDoor>();
-                if (exit != null)
+                bool canClockOut = true;
+                if (ServiceLocator.GameManager != null && ServiceLocator.GameManager.CurrentDayData != null)
                 {
-                    exit.SetPlayerLooking(true);
-                    lastLookedAtExitDoor = exit;
+                    if (ServiceLocator.GameManager.CurrentDayData.isFinalDay || ServiceLocator.GameManager.CurrentDayData.isExecutionDay) canClockOut = false;
+                }
+
+                if (canClockOut)
+                {
+                    lookingAtExit = true;
+                    ExitDoor exit = currentHit.collider.GetComponent<ExitDoor>();
+                    if (exit != null)
+                    {
+                        exit.SetPlayerLooking(true);
+                        lastLookedAtExitDoor = exit;
+                    }
                 }
             }
         }
