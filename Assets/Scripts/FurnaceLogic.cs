@@ -4,7 +4,6 @@ using System.Collections.Generic;
 public class FurnaceLogic : MonoBehaviour
 {
     [Header("Connections")]
-    public GameManager gameManager;
 
     [Header("Furnace State")]
     public bool isDoorClosed = false;
@@ -14,6 +13,18 @@ public class FurnaceLogic : MonoBehaviour
     public GameObject[] day6CharredDebrisPrefabs;
 
     private List<GameObject> itemsInside = new List<GameObject>();
+
+    void OnEnable()
+    {
+        GameEvents.OnFurnaceActivated += ActivateFurnace;
+        GameEvents.OnFurnaceDoorToggled += SetDoorState;
+    }
+
+    void OnDisable()
+    {
+        GameEvents.OnFurnaceActivated -= ActivateFurnace;
+        GameEvents.OnFurnaceDoorToggled -= SetDoorState;
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -50,9 +61,9 @@ public class FurnaceLogic : MonoBehaviour
             if (debris != null && debris.isCharred) charredDebrisCount++;
         }
 
-        if (bagsToBurn > 0 && charredDebrisCount > 0) gameManager.TriggerFutureGameOver("Equipment Neglect: Attempted to process new material while furnace was obstructed by uncleared carbonized debris.");
+        if (bagsToBurn > 0 && charredDebrisCount > 0) GameEvents.OnTriggerGameOver?.Invoke("Equipment Neglect: Attempted to process new material while furnace was obstructed by uncleared carbonized debris.");
 
-        if (bagsToBurn > 0) gameManager.VerifyFurnaceHonesty(bagsToBurn);
+        if (bagsToBurn > 0 && ServiceLocator.GameManager != null) ServiceLocator.GameManager.VerifyFurnaceHonesty(bagsToBurn);
 
         for (int i = itemsInside.Count - 1; i >= 0; i--)
         {
@@ -64,7 +75,7 @@ public class FurnaceLogic : MonoBehaviour
             }
             else if (item.CompareTag("Tool"))
             {
-                gameManager.TriggerFutureGameOver("Destruction of essential company property.");
+                GameEvents.OnTriggerGameOver?.Invoke("Destruction of essential company property.");
                 Destroy(item);
             }
             else if (item.GetComponent<DebrisLogic>() != null)
@@ -77,7 +88,7 @@ public class FurnaceLogic : MonoBehaviour
 
                 if (bagData.bagWeight == TrashBag_data.WeightCategory.OverCapacity)
                 {
-                    gameManager.TriggerFutureGameOver("Protocol Violation: Incinerated OVER_CAPACITY material. Excess debris permanently jammed the furnace.");
+                    GameEvents.OnTriggerGameOver?.Invoke("Protocol Violation: Incinerated OVER_CAPACITY material. Excess debris permanently jammed the furnace.");
 
                     if (bagData.excessTrashPrefab != null)
                     {
@@ -89,9 +100,9 @@ public class FurnaceLogic : MonoBehaviour
 
                 if (bagData.isOrganic) Debug.Log("AUDIO: Human-like scream audio plays");
 
-                gameManager.AddBurnedBag(bagData);
+                if (ServiceLocator.GameManager != null) ServiceLocator.GameManager.AddBurnedBag(bagData);
 
-                if (gameManager.CurrentDayData != null && gameManager.CurrentDayData.hasCharredDebris && day6CharredDebrisPrefabs.Length > 0)
+                if (ServiceLocator.GameManager != null && ServiceLocator.GameManager.CurrentDayData != null && ServiceLocator.GameManager.CurrentDayData.hasCharredDebris && day6CharredDebrisPrefabs.Length > 0)
                 {
                     for (int j = 0; j < 2; j++)
                     {
@@ -116,7 +127,7 @@ public class FurnaceLogic : MonoBehaviour
     {
         isDoorClosed = closedState;
 
-        if (gameManager.CurrentDayData != null && gameManager.CurrentDayData.isFinalDay && isDoorClosed && !endingTriggered)
+        if (ServiceLocator.GameManager != null && ServiceLocator.GameManager.CurrentDayData != null && ServiceLocator.GameManager.CurrentDayData.isFinalDay && isDoorClosed && !endingTriggered)
         {
             foreach (GameObject item in itemsInside)
             {
@@ -134,9 +145,9 @@ public class FurnaceLogic : MonoBehaviour
     {
         Debug.Log("THERMAL DISPOSAL: INITIATED. GAME OVER.");
 
-        if (gameManager != null)
+        if (ServiceLocator.GameManager != null)
         {
-            gameManager.TriggerTrueEnding();
+            ServiceLocator.GameManager.TriggerTrueEnding();
         }
     }
 }

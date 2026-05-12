@@ -285,8 +285,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (currentHit.collider.CompareTag("Switch"))
             {
-                FurnaceLogic furnace = FindFirstObjectByType<FurnaceLogic>();
-                if (furnace != null) furnace.ActivateFurnace();
+                GameEvents.OnFurnaceActivated?.Invoke();
             }
             else if (currentHit.collider.CompareTag("Door")) ToggleDoor();
         }
@@ -295,8 +294,7 @@ public class PlayerInteraction : MonoBehaviour
     void ToggleDoor()
     {
         isDoorOpen = !isDoorOpen;
-        FurnaceLogic furnace = FindFirstObjectByType<FurnaceLogic>();
-        if (furnace != null) furnace.SetDoorState(!isDoorOpen);
+        GameEvents.OnFurnaceDoorToggled?.Invoke(!isDoorOpen);
     }
 
     void FixedUpdate()

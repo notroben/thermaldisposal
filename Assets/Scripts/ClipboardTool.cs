@@ -7,7 +7,7 @@ public class ClipboardTool : MonoBehaviour
 
     void Start()
     {
-        player = FindFirstObjectByType<PlayerController>();
+        player = ServiceLocator.PlayerController;
     }
 
     public void ToggleFocus(bool focusStatus)

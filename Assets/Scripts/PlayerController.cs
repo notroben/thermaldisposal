@@ -36,6 +36,11 @@ public class PlayerController : MonoBehaviour
     private float velocityY = 0f;
     private bool isGrounded;
 
+    void Awake()
+    {
+        ServiceLocator.RegisterPlayerController(this);
+    }
+
     void Start()
     {
         controller = GetComponent<CharacterController>();

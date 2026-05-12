@@ -44,6 +44,21 @@ public class GameManager : MonoBehaviour
     [Header("Day 5 Unlocks")]
     public GameObject day5ExtraTaskRow;
 
+    void Awake()
+    {
+        ServiceLocator.RegisterGameManager(this);
+    }
+
+    void OnEnable()
+    {
+        GameEvents.OnTriggerGameOver += TriggerFutureGameOver;
+    }
+
+    void OnDisable()
+    {
+        GameEvents.OnTriggerGameOver -= TriggerFutureGameOver;
+    }
+
     void Start()
     {
         if (forceStartingDay)

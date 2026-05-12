@@ -24,7 +24,7 @@ public class TrashSpawner : MonoBehaviour
 
     void Start()
     {
-        gameManager = FindFirstObjectByType<GameManager>();
+        gameManager = ServiceLocator.GameManager;
 
         if (gameManager != null && gameManager.CurrentDayData != null)
         {

@@ -17,7 +17,7 @@ public class ClipboardTask : MonoBehaviour
 
     void Start()
     {
-        gameManager = FindFirstObjectByType<GameManager>();
+        gameManager = ServiceLocator.GameManager;
 
         if (taskText != null)
         {
@@ -31,14 +31,14 @@ public class ClipboardTask : MonoBehaviour
 
         if (taskIndex != gameManager.uiCheckedCount)
         {
-            gameManager.TriggerFutureGameOver("Sloppy Documentation: Paperwork logged out of chronological sequence.");
+            GameEvents.OnTriggerGameOver?.Invoke("Sloppy Documentation: Paperwork logged out of chronological sequence.");
         }
 
         gameManager.uiCheckedCount++;
 
         if (gameManager.uiCheckedCount > gameManager.physicalWeighedCount)
         {
-            gameManager.TriggerFutureGameOver("Falsified Records: Marked material as weighed prior to validation.");
+            GameEvents.OnTriggerGameOver?.Invoke("Falsified Records: Marked material as weighed prior to validation.");
         }
 
         if (checkbox != null)
@@ -53,7 +53,7 @@ public class ClipboardTask : MonoBehaviour
 
         if (taskIndex != gameManager.uiCrossedOutCount)
         {
-            gameManager.TriggerFutureGameOver("Sloppy Documentation: Incineration logged out of chronological sequence.");
+            GameEvents.OnTriggerGameOver?.Invoke("Sloppy Documentation: Incineration logged out of chronological sequence.");
         }
 
         isBurned = true;
@@ -61,7 +61,7 @@ public class ClipboardTask : MonoBehaviour
 
         if (gameManager.uiCrossedOutCount > gameManager.bagsBurnedToday)
         {
-            gameManager.TriggerFutureGameOver("Falsified Records: Marked material as incinerated prior to thermal disposal.");
+            GameEvents.OnTriggerGameOver?.Invoke("Falsified Records: Marked material as incinerated prior to thermal disposal.");
         }
 
         taskText.text = "<s>" + originalText + "</s>";
