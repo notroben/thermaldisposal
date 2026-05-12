@@ -43,13 +43,13 @@ The game utilizes a Day-by-day progression system, introducing new mechanics and
 
 | Day | Quota | Narrative & Mechanical Escalation |
 | :--- | :--- | :--- |
-| **Day 1** | 10 Bags | Introduction to the core loop. Bags feel heavy and sound "wet." |
-| **Day 2** | 10 Bags | **Scanner Unlocked.** Bags show "no metal", but bag #9 twitches and scans as "organic matter detected." |
-| **Day 3** | 10 Bags | **Conveyor Broken.** Player must manually retrieve bags from a dark corner where monster/human screams can be faintly heard. |
-| **Day 4** | 10 Bags | Directive: "Ignore acoustics, they are trapped gases." 3 bags scan as organic and scream horrifically when incinerated. |
-| **Day 5** | 10 Bags | **Bag Opening Mechanic.** 5 bags are "OVER_CAPACITY". Player must open them (revealing raw meat mixed with household items like shoes and toothbrushes) and repackage them. |
-| **Day 6** | 10 Bags | **Iron Poker Unlocked.** Incomplete combustion occurs. Player must use the poker to manually push charred debris (including human limbs) deep into the flames. |
-| **Day 7** | 1 Task | **The Final Shift.** Only 1 task on the clipboard. The conveyor is empty. The only object in the room that reads "OPTIMAL" on the scale is the Player themselves. |
+| **1** | 10 Bags | Introduction to the core loop. Bags feel heavy and sound "wet." |
+| **2** | 10 Bags | **Scanner Unlocked.** Bags show "no metal", but bag #9 twitches and scans as "organic matter detected." |
+| **3** | 10 Bags | **Conveyor Broken.** Player must manually retrieve bags from a dark corner where monster/human screams can be faintly heard. |
+| **4** | 10 Bags | Directive: "Ignore acoustics, they are trapped gases." 3 bags scan as organic and scream horrifically when incinerated. |
+| **5** | 10 Bags | **Bag Opening Mechanic.** 5 bags are "OVER_CAPACITY". Player must open them (revealing raw meat mixed with household items like shoes and toothbrushes) and repackage them. |
+| **6** | 10 Bags | **Iron Poker Unlocked.** Incomplete combustion occurs. Player must use the poker to manually push charred debris (including human limbs) deep into the flames. |
+| **7** | 1 Task | **The Final Shift.** Only 1 task on the clipboard. The conveyor is empty. The only object in the room that reads "OPTIMAL" on the scale is the Player themselves. |
 
 ---
 
