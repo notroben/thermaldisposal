@@ -3681,7 +3681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c28632171c1e114a986f462b8c338d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::gameManager
-  currentDay: 5
+  currentDay: 1
   dailyQuota: 10
   dayConfigs:
   - {fileID: 11400000, guid: ffdd0c31ba303c64bbf9331a84fd0fe6, type: 2}
@@ -3692,7 +3692,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 83d6fe48a9ba0ec4c8cbf5b6852da57d, type: 2}
   - {fileID: 11400000, guid: eeb564a8538e78848b52a8e1ab544ad5, type: 2}
   - {fileID: 11400000, guid: e8a699545d7631c4591d4eb62afc11f2, type: 2}
-  forceStartingDay: 1
+  forceStartingDay: 0
   scannerTool: {fileID: 1400161361}
   clipboardHeaderText: {fileID: 9869825}
   conveyorBelt: {fileID: 981861065}
@@ -3739,7 +3739,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8f5597a5d5b34144b7da262b8e8644b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FurnaceLogic
-  gameManager: {fileID: 509827116}
   isDoorClosed: 0
   day6CharredDebrisPrefabs:
   - {fileID: 3705699794991296653, guid: 52a8dadaf7fa61c458a77c2060fb1a5d, type: 3}
@@ -7214,6 +7213,7 @@ GameObject:
   - component: {fileID: 981861063}
   - component: {fileID: 981861062}
   - component: {fileID: 981861061}
+  - component: {fileID: 981861066}
   - component: {fileID: 981861065}
   m_Layer: 0
   m_Name: ConveyorBelt
@@ -7330,6 +7330,33 @@ MonoBehaviour:
   speed: 2
   moveDirection: {x: 0, y: 0, z: 1}
   isBroken: 0
+--- !u!54 &981861066
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981861060}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &982684820
 GameObject:
   m_ObjectHideFlags: 0
