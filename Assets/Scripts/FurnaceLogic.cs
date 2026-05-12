@@ -43,11 +43,11 @@ public class FurnaceLogic : MonoBehaviour
     {
         if (!isDoorClosed)
         {
-            Debug.Log("ERROR: Cannot start! Furnace door is open.");
+            Debug.Log("SYSTEM WARNING: Thermal Disposal unit cannot activate while safety door is ajar.");
             return;
         }
 
-        Debug.Log("FURNACE ACTIVATED! Incinerating contents...");
+        Debug.Log("SYSTEM: Thermal Disposal unit activated. Processing...");
 
         itemsInside.RemoveAll(item => item == null || !item.activeInHierarchy || (item.GetComponent<Collider>() != null && !item.GetComponent<Collider>().enabled));
 
@@ -61,7 +61,7 @@ public class FurnaceLogic : MonoBehaviour
             if (debris != null && debris.isCharred) charredDebrisCount++;
         }
 
-        if (bagsToBurn > 0 && charredDebrisCount > 0) GameEvents.OnTriggerGameOver?.Invoke("Equipment Neglect: Attempted to process new material while furnace was obstructed by uncleared carbonized debris.");
+        if (bagsToBurn > 0 && charredDebrisCount > 0) GameEvents.OnTriggerGameOver?.Invoke(RuleBreak.FurnaceJammedDebris);
 
         if (bagsToBurn > 0 && ServiceLocator.GameManager != null) ServiceLocator.GameManager.VerifyFurnaceHonesty(bagsToBurn);
 
@@ -75,7 +75,7 @@ public class FurnaceLogic : MonoBehaviour
             }
             else if (item.CompareTag("Tool"))
             {
-                GameEvents.OnTriggerGameOver?.Invoke("Destruction of essential company property.");
+                GameEvents.OnTriggerGameOver?.Invoke(RuleBreak.PropertyDestruction);
                 Destroy(item);
             }
             else if (item.GetComponent<DebrisLogic>() != null)
@@ -88,7 +88,7 @@ public class FurnaceLogic : MonoBehaviour
 
                 if (bagData.bagWeight == TrashBag_data.WeightCategory.OverCapacity)
                 {
-                    GameEvents.OnTriggerGameOver?.Invoke("Protocol Violation: Incinerated OVER_CAPACITY material. Excess debris permanently jammed the furnace.");
+                    GameEvents.OnTriggerGameOver?.Invoke(RuleBreak.FurnaceJammedOverCapacity);
 
                     if (bagData.excessTrashPrefab != null)
                     {
@@ -98,7 +98,7 @@ public class FurnaceLogic : MonoBehaviour
                     }
                 }
 
-                if (bagData.isOrganic) Debug.Log("AUDIO: Human-like scream audio plays");
+                if (bagData.isOrganic) Debug.Log("AUDIO TRIGGER: Play organic matter scream SFX");
 
                 if (ServiceLocator.GameManager != null) ServiceLocator.GameManager.AddBurnedBag(bagData);
 
@@ -143,7 +143,7 @@ public class FurnaceLogic : MonoBehaviour
 
     void TriggerEndingSequence()
     {
-        Debug.Log("THERMAL DISPOSAL: INITIATED. GAME OVER.");
+        Debug.Log("SYSTEM: Final Protocol Initiated. Commencing Employee Execution.");
 
         if (ServiceLocator.GameManager != null)
         {

@@ -71,19 +71,19 @@ public class ExitDoor : MonoBehaviour
 
         if (!quotaMet || !paperworkDone)
         {
-            gameManager.TriggerFutureGameOver("Shift Abandonment: You clocked out prior to completing your daily quota and documentation.");
+            GameEvents.OnTriggerGameOver?.Invoke(RuleBreak.ShiftAbandonment);
         }
 
         if (gameManager.fatalRuleBroken)
         {
             GameManager.globalDay = 8;
-            Debug.Log("LOADING EXECUTION SHIFT... " + gameManager.ruleBreakReason);
+            Debug.Log("SYSTEM: Loading Day 8 Execution sequence... " + gameManager.ruleBreakReason);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         else
         {
             gameManager.currentDay++;
-            Debug.Log("LOADING DAY " + gameManager.currentDay + "...");
+            Debug.Log("SYSTEM: Loading Day " + gameManager.currentDay + "...");
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }

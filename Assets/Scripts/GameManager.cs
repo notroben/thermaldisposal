@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
         if (alarmSystem != null) alarmSystem.SetActive(true);
         if (gameOverCanvas != null) gameOverCanvas.SetActive(false);
 
-        Debug.Log("AUDIO: alarm playing");
+        Debug.Log("AUDIO TRIGGER: Play Execution Alarm SFX");
 
         yield return new WaitForSeconds(8f);
 
@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
 
     public void AddBurnedBag(TrashBag_data bagData)
     {
-        if (!bagData.hasBeenWeighed) TriggerFutureGameOver("You incinerated un-weighed material.");
+        if (!bagData.hasBeenWeighed) TriggerFutureGameOver(RuleBreak.UnweighedBurn);
         bagsBurnedToday++;
         Debug.Log("Bags Burned: " + bagsBurnedToday + " / " + dailyQuota);
     }
@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
         fatalRuleBroken = true;
         ruleBreakReason = reason;
         globalRuleBreakReason = reason;
-        Debug.Log("FATAL ERROR LOGGED: " + reason);
+        Debug.Log("HR SYSTEM: Infraction logged. Employee marked for Day 8 execution. Reason: " + reason);
     }
 
     public void VerifyFurnaceHonesty(int bagsAboutToBurn)
@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour
         int totalBagsAfterBurn = bagsBurnedToday + bagsAboutToBurn;
         if (uiCheckedCount < totalBagsAfterBurn)
         {
-            TriggerFutureGameOver("Missing Documentation: Material incinerated prior to logging checklist.");
+            TriggerFutureGameOver(RuleBreak.UndocumentedBurn);
         }
     }
     public void TriggerTrueEnding()
@@ -151,14 +151,14 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator TrueEndingRoutine()
     {
-        Debug.Log("AUDIO: furnace roar");
+        Debug.Log("AUDIO TRIGGER: Play True Ending Furnace Roar SFX");
 
         yield return new WaitForSeconds(2f);
 
         if (gameOverCanvas != null) gameOverCanvas.SetActive(true);
         if (gameOverReasonText != null)
         {
-            gameOverReasonText.text = "THERMAL DISPOSAL COMPLETE.\nThank you for your service to The Company.";
+            gameOverReasonText.text = "THERMAL DISPOSAL COMPLETE.\nYour service to The Company has been concluded.";
         }
 
         Time.timeScale = 0f;

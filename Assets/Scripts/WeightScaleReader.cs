@@ -29,7 +29,7 @@ public class WeightScaleReader : MonoBehaviour
             {
                 if (gameManager != null && gameManager.physicalWeighedCount > gameManager.uiCrossedOutCount)
                 {
-                    gameManager.TriggerFutureGameOver("Failed to finalize previous incineration record before processing new material.");
+                    GameEvents.OnTriggerGameOver?.Invoke(RuleBreak.ScaleUnfinalized);
                 }
 
                 bagData.hasBeenWeighed = true;
