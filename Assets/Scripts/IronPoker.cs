@@ -10,14 +10,23 @@ public class IronPoker : MonoBehaviour
         Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
         RaycastHit[] hits = Physics.RaycastAll(ray, pokeRange);
 
+        bool hitValid = false;
+
         foreach (RaycastHit hit in hits)
         {
             DebrisLogic debris = hit.collider.GetComponent<DebrisLogic>();
             if (debris != null)
             {
                 debris.Poke();
+                hitValid = true;
                 break;
             }
+        }
+
+        if (ServiceLocator.AudioManager != null)
+        {
+            if (hitValid) ServiceLocator.AudioManager.PlayGlobalSFX("IronPokerPokeObject");
+            else ServiceLocator.AudioManager.PlayGlobalSFX("IronPokerPoke");
         }
     }
 }

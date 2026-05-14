@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class FurnaceLogic : MonoBehaviour
@@ -8,6 +9,7 @@ public class FurnaceLogic : MonoBehaviour
     [Header("Furnace State")]
     public bool isDoorClosed = false;
     private bool endingTriggered = false;
+    [HideInInspector] public bool isProcessing = false;
 
     [Header("Day 6 Incomplete Combustion")]
     public GameObject[] day6CharredDebrisPrefabs;
@@ -41,15 +43,28 @@ public class FurnaceLogic : MonoBehaviour
 
     public void ActivateFurnace()
     {
+        if (isProcessing) return;
+
         if (!isDoorClosed)
         {
             Debug.Log("SYSTEM WARNING: Thermal Disposal unit cannot activate while safety door is ajar.");
-            if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("FurnaceError", transform.position);
+            // if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("ErrorBeep", transform.position);
             return;
         }
 
+        StartCoroutine(ProcessingRoutine());
+    }
+
+    IEnumerator ProcessingRoutine()
+    {
+        isProcessing = true;
+
         Debug.Log("SYSTEM: Thermal Disposal unit activated. Processing...");
-        if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("FurnaceRoar", transform.position);
+        if (ServiceLocator.AudioManager != null)
+        {
+            ServiceLocator.AudioManager.PlaySFXAtPosition("FurnaceSwitch", transform.position);
+            ServiceLocator.AudioManager.PlaySFXAtPosition("FurnaceRoar", transform.position);
+        } 
 
         itemsInside.RemoveAll(item => item == null || !item.activeInHierarchy || (item.GetComponent<Collider>() != null && !item.GetComponent<Collider>().enabled));
 
@@ -127,6 +142,9 @@ public class FurnaceLogic : MonoBehaviour
                 Destroy(item);
             }
         }
+
+        yield return new WaitForSeconds(5f);
+        isProcessing = false;
     }
 
     public void SetDoorState(bool closedState)

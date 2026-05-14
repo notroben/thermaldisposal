@@ -1,7 +1,5 @@
 # **Game Design Document: *Thermal Disposal***
 
-Ahmad Muqorrobin (5025231254)
-
 1. ## **General Information**
 
    1. **Judul Game:** Thermal Disposal  

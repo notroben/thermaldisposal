@@ -55,6 +55,7 @@ public class ExitDoor : MonoBehaviour
 
     IEnumerator EndShiftRoutine()
     {
+        if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("ExitDoor", transform.position);
         isFading = true;
         if (holdIndicator != null) holdIndicator.fillAmount = 0f;
 

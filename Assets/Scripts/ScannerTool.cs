@@ -6,12 +6,18 @@ public class ScannerTool : MonoBehaviour
     public TextMeshProUGUI screenText;
     public float scanTime = 1.5f;
     private float currentScanTime = 0f;
+    private bool hasScanned = false;
 
     [HideInInspector] public bool isEquipped = false;
 
     void Update()
     {
         if (!isEquipped) return;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("ScannerClick", transform.position);
+        }
 
         if (Input.GetMouseButton(0))
         {
@@ -33,22 +39,29 @@ public class ScannerTool : MonoBehaviour
             if (targetBag != null)
             {
                 currentScanTime += Time.deltaTime;
-                float percent = (currentScanTime / scanTime) * 100f;
-                screenText.text = "SCANNING...\n" + percent.ToString("F0") + "%";
-
-                if (currentScanTime >= scanTime)
+                if (!hasScanned)
                 {
-                    if (targetBag.isOrganic)
+                    float percent = (currentScanTime / scanTime) * 100f;
+                    screenText.text = "SCANNING...\n" + percent.ToString("F0") + "%";
+
+                    if (currentScanTime >= scanTime)
                     {
-                        screenText.text = "<color=orange>ORGANIC\nMATTER\nDETECTED</color>";
-                    }
-                    else if (targetBag.hasMetal) // unnecessary, might be removed later
-                    {
-                        screenText.text = "<color=red>METAL\nDETECTED</color>";
-                    }
-                    else
-                    {
-                        screenText.text = "<color=green>NO METAL\nDETECTED</color>";
+                        hasScanned = true;
+                        if (targetBag.isOrganic)
+                        {
+                            screenText.text = "<color=orange>ORGANIC\nMATTER\nDETECTED</color>";
+                            if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("ErrorBeep", transform.position);
+                        }
+                        else if (targetBag.hasMetal) // unnecessary, might be removed later
+                        {
+                            screenText.text = "<color=red>METAL\nDETECTED</color>";
+                            if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("ScannerBeep", transform.position);
+                        }
+                        else
+                        {
+                            screenText.text = "<color=green>NO METAL\nDETECTED</color>";
+                            if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("ScannerBeep", transform.position);
+                        }
                     }
                 }
             }
@@ -56,12 +69,14 @@ public class ScannerTool : MonoBehaviour
             {
                 screenText.text = "INVALID\nTARGET";
                 currentScanTime = 0f;
+                hasScanned = false;
             }
         }
         else
         {
             screenText.text = "READY";
             currentScanTime = 0f;
+            hasScanned = false;
         }
     }
 }

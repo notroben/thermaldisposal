@@ -44,6 +44,15 @@ This document lists all third-party assets used in the development of *Thermal D
 | muffled scream.wav | RStickCat34 | CC0 | [Freesound](https://freesound.org/s/829023/) |
 | Muffled scream MWP.wav | zajichavez | CC0 | [Freesound](https://freesound.org/s/615839/) |
 | Alarm Siren, Fast Oscillations | Kinoton | CC0 | [Freesound](https://freesound.org/s/420661/) |
+| Generic Game Pick Up | IENBA | CC0 | [Freesound](https://freesound.org/s/831642/) |
+| Plastic Rip Off.wav | vmgraw | CC0 | [Freesound](https://freesound.org/s/257699/) |
+| Light Switch Click On and Off | SomeoneCool15 | CC0 | [Freesound](https://freesound.org/s/423512/) |
+| music game, win or high score.wav | xtrgamr | CC-BY 4.0 | [Freesound](https://freesound.org/s/244536/) |
+| Clipboard clipping sound.wav | 21100327 | CC-BY-NC 4.0 | [Freesound](https://freesound.org/s/594595/) |
+| Hitting Metal Bars Against Each Other.wav | Rikus246 | CC-BY-NC 3.0 | [Freesound](https://freesound.org/s/328407/) |
+| Bamboo Swing, C4.wav | InspectorJ | CC-BY 4.0 | [Freesound](https://freesound.org/s/394457/) |
+| Thing.wav | _bepis | CC-BY 4.0 | [Freesound](https://freesound.org/s/415198/) |
+| PickupBook1.wav | jomse | CC-BY 4.0 | [Freesound](https://freesound.org/s/428666/) |
 
 ---
 

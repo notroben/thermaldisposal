@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4237047881991092155}
   - component: {fileID: 5711793049897996429}
   - component: {fileID: 4397442611010656812}
+  - component: {fileID: 6139594991573705001}
   m_Layer: 3
   m_Name: excessTrash
   m_TagString: ExcessTrash
@@ -154,3 +155,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DebrisLogic
   isCharred: 0
+--- !u!114 &6139594991573705001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3705699794991296653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce03e9fccd95dda4fb3a9f5dfb849eeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CollisionAudio
+  impactSoundName: ObjectCollide
+  minImpactForce: 1

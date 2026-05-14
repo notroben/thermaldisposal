@@ -35,6 +35,11 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     private float velocityY = 0f;
     private bool isGrounded;
+    private bool wasGrounded;
+
+    [Header("Audio Settings")]
+    public float footstepInterval = 0.45f;
+    private float footstepTimer = 0f;
 
     void Awake()
     {
@@ -88,7 +93,14 @@ public class PlayerController : MonoBehaviour
 
     void Movement()
     {
+        wasGrounded = isGrounded;
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        if (!wasGrounded && isGrounded && velocityY < 0)
+        {
+            if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("Footstep", transform.position);
+            footstepTimer = footstepInterval;
+        }
 
         if (isGrounded && velocityY < 0)
         {
@@ -103,9 +115,24 @@ public class PlayerController : MonoBehaviour
         float currentSpeed = isCrouching ? crouchSpeed : walkSpeed;
         controller.Move(move * currentSpeed * Time.deltaTime);
 
+        if (isGrounded && move.sqrMagnitude > 0.01f)
+        {
+            footstepTimer -= Time.deltaTime * (currentSpeed / walkSpeed);
+            if (footstepTimer <= 0f)
+            {
+                if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("Footstep", transform.position);
+                footstepTimer = footstepInterval;
+            }
+        }
+        else if (!isGrounded || move.sqrMagnitude < 0.01f)
+        {
+            footstepTimer = 0f;
+        }
+
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             velocityY = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("Footstep", transform.position);
         }
 
         velocityY += gravity * Time.deltaTime;

@@ -16,6 +16,7 @@ public class OrganicJitter : MonoBehaviour
 
     private float nextSpasmStartTime = 0f;
     private float currentSpasmEndTime = 0f;
+    private bool hasPlayedSpasmAudio = false;
 
     void Start()
     {
@@ -31,6 +32,12 @@ public class OrganicJitter : MonoBehaviour
         {
             if (Time.time <= currentSpasmEndTime)
             {
+                if (!hasPlayedSpasmAudio)
+                {
+                    if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("BagJitter", transform.position);
+                    hasPlayedSpasmAudio = true;
+                }
+
                 float randX = Random.Range(-scaleDistortion, scaleDistortion);
                 // float randY = Random.Range(-scaleDistortion, scaleDistortion);
                 float randZ = Random.Range(-scaleDistortion, scaleDistortion);
@@ -54,5 +61,6 @@ public class OrganicJitter : MonoBehaviour
     {
         nextSpasmStartTime = Time.time + Random.Range(minWaitTime, maxWaitTime);
         currentSpasmEndTime = nextSpasmStartTime + spasmDuration;
+        hasPlayedSpasmAudio = false;
     }
 }

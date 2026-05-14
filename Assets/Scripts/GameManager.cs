@@ -112,13 +112,12 @@ public class GameManager : MonoBehaviour
         if (alarmSystem != null) alarmSystem.SetActive(true);
         if (gameOverCanvas != null) gameOverCanvas.SetActive(false);
 
-        Debug.Log("AUDIO TRIGGER: Play Execution Alarm SFX");
-        if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlayGlobalSFX("ExecutionAlarm");
-
-        yield return new WaitForSeconds(8f);
+        yield return new WaitForSeconds(16f);
 
         if (gameOverCanvas != null) gameOverCanvas.SetActive(true);
+        if (alarmSystem != null) alarmSystem.SetActive(false);
         if (gameOverReasonText != null) gameOverReasonText.text = ruleBreakReason;
+        if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlayGlobalSFX("GameOver");
 
         Time.timeScale = 0f;
     }
@@ -152,10 +151,14 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator TrueEndingRoutine()
     {
-        Debug.Log("AUDIO TRIGGER: Play True Ending Furnace Roar SFX");
-        if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlayGlobalSFX("ExecutionFurnaceRoar");
-
         yield return new WaitForSeconds(2f);
+
+        Debug.Log("AUDIO TRIGGER: Play True Ending Furnace Roar SFX");
+        if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlayGlobalSFX("FurnaceRoar");
+
+        yield return new WaitForSeconds(0.5f);
+
+        if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlayGlobalSFX("EndScreen");
 
         if (gameOverCanvas != null) gameOverCanvas.SetActive(true);
         if (gameOverReasonText != null)

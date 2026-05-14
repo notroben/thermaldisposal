@@ -8,6 +8,7 @@ public class SoundEffect
     public AudioClip clip;
     [Range(0f, 1f)] public float volume = 1f;
     [Range(0.5f, 1.5f)] public float pitch = 1f;
+    public bool randomizePitch = true;
 }
 
 public class AudioManager : MonoBehaviour
@@ -53,7 +54,19 @@ public class AudioManager : MonoBehaviour
         SoundEffect s = GetSound(name);
         if (s != null && s.clip != null)
         {
-            globalAudioSource.PlayOneShot(s.clip, s.volume);
+            GameObject tempAudioObj = new GameObject("TempAudio_2D_" + name);
+            AudioSource tempSource = tempAudioObj.AddComponent<AudioSource>();
+            float safeVolume = s.volume <= 0.01f ? 1f : s.volume;
+            float safePitch = s.pitch <= 0.1f ? 1f : s.pitch;
+            float randomPitch = s.randomizePitch ? (safePitch * Random.Range(0.9f, 1.1f)) : safePitch;
+
+            tempSource.clip = s.clip;
+            tempSource.volume = safeVolume;
+            tempSource.pitch = randomPitch;
+            tempSource.spatialBlend = 0f;
+            
+            tempSource.Play();
+            Destroy(tempAudioObj, s.clip.length / randomPitch);
         }
     }
 
@@ -66,16 +79,20 @@ public class AudioManager : MonoBehaviour
             tempAudioObj.transform.position = position;
 
             AudioSource tempSource = tempAudioObj.AddComponent<AudioSource>();
+            float safeVolume = s.volume <= 0.01f ? 1f : s.volume;
+            float safePitch = s.pitch <= 0.1f ? 1f : s.pitch;
+            float randomPitch = s.randomizePitch ? (safePitch * Random.Range(0.9f, 1.1f)) : safePitch;
+
             tempSource.clip = s.clip;
-            tempSource.volume = s.volume;
-            tempSource.pitch = s.pitch;
+            tempSource.volume = safeVolume;
+            tempSource.pitch = randomPitch;
             tempSource.spatialBlend = 1f;
             tempSource.minDistance = 2f;
             tempSource.maxDistance = 20f;
             tempSource.rolloffMode = AudioRolloffMode.Linear;
 
             tempSource.Play();
-            Destroy(tempAudioObj, s.clip.length);
+            Destroy(tempAudioObj, s.clip.length / randomPitch);
         }
     }
 }

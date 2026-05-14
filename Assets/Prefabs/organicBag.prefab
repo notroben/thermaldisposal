@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8874717015323666504}
   - component: {fileID: 4780256315053078513}
   - component: {fileID: 4304877413175777288}
+  - component: {fileID: 8148288556899772988}
   m_Layer: 3
   m_Name: organicBag
   m_TagString: Untagged
@@ -133,6 +134,9 @@ MonoBehaviour:
   isOrganic: 1
   hasBeenWeighed: 0
   hasBeenRecorded: 0
+  isOpen: 0
+  isSealed: 0
+  excessTrashPrefab: {fileID: 0}
 --- !u!54 &4780256315053078513
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -177,3 +181,17 @@ MonoBehaviour:
   spasmDuration: 0.05
   scaleDistortion: 0.05
   positionalShakeForce: 5
+--- !u!114 &8148288556899772988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5976279289620639315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce03e9fccd95dda4fb3a9f5dfb849eeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CollisionAudio
+  impactSoundName: DropBagWet
+  minImpactForce: 1

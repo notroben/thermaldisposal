@@ -292,6 +292,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (currentHit.collider.CompareTag("Switch"))
             {
+                if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("FurnaceSwitch", currentHit.point);
                 GameEvents.OnFurnaceActivated?.Invoke();
             }
             else if (currentHit.collider.CompareTag("Door")) ToggleDoor();
@@ -300,6 +301,13 @@ public class PlayerInteraction : MonoBehaviour
 
     void ToggleDoor()
     {
+        FurnaceLogic furnace = UnityEngine.Object.FindFirstObjectByType<FurnaceLogic>();
+        if (furnace != null && furnace.isProcessing)
+        {
+            if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("FurnaceDoorFail", currentHit.point);
+            return;
+        }
+
         isDoorOpen = !isDoorOpen;
         GameEvents.OnFurnaceDoorToggled?.Invoke(!isDoorOpen);
     }
@@ -321,7 +329,12 @@ public class PlayerInteraction : MonoBehaviour
 
         if (ServiceLocator.AudioManager != null)
         {
-            if (pickObj.CompareTag("Tool")) ServiceLocator.AudioManager.PlayGlobalSFX("PickupTool");
+            if (pickObj.CompareTag("Tool"))
+            {
+                if (pickObj.GetComponent<IronPoker>() != null) ServiceLocator.AudioManager.PlayGlobalSFX("IronPokerPickup");
+                else if (pickObj.GetComponent<ClipboardTool>() != null) ServiceLocator.AudioManager.PlayGlobalSFX("ClipboardPickup");
+                else ServiceLocator.AudioManager.PlayGlobalSFX("PickupTool");
+            }
             else ServiceLocator.AudioManager.PlayGlobalSFX("PickupBag");
         }
 
@@ -363,8 +376,16 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (ServiceLocator.AudioManager != null)
         {
-            if (isHoldingTool) ServiceLocator.AudioManager.PlayGlobalSFX("DropTool");
-            else ServiceLocator.AudioManager.PlayGlobalSFX("DropBag");
+            if (isHoldingTool)
+            {
+                if (heldObject.GetComponent<IronPoker>() != null) ServiceLocator.AudioManager.PlayGlobalSFX("IronPokerDrop");
+                else if (heldObject.GetComponent<ClipboardTool>() != null) ServiceLocator.AudioManager.PlayGlobalSFX("ClipboardDrop");
+                else ServiceLocator.AudioManager.PlayGlobalSFX("DropTool");
+            }
+            else 
+            {
+                ServiceLocator.AudioManager.PlayGlobalSFX("PickupBag");
+            }
         }
 
         ClipboardTool clipboard = heldObject.GetComponent<ClipboardTool>();

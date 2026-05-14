@@ -18,7 +18,7 @@ public class DayData : ScriptableObject
 
     [Header("Spawning Rules")]
     public int randomOrganicCount = 0;
-    public int specificOrganicIndex = -1; // Set to -1 for none, e.g., 8 for Day 2
+    public int specificOrganicIndex = -1;
     public int randomOverCapacityCount = 0;
     public bool spawnEmptyBag = false;
     
