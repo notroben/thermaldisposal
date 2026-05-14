@@ -48,9 +48,6 @@ public class AudioManager : MonoBehaviour
         return null;
     }
 
-    /// <summary>
-    /// Plays a 2D sound globally (UI, ambient, alarms).
-    /// </summary>
     public void PlayGlobalSFX(string name)
     {
         SoundEffect s = GetSound(name);
@@ -60,9 +57,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Plays a 3D sound at a specific position. Instantiates a temporary object.
-    /// </summary>
     public void PlaySFXAtPosition(string name, Vector3 position)
     {
         SoundEffect s = GetSound(name);
@@ -75,7 +69,7 @@ public class AudioManager : MonoBehaviour
             tempSource.clip = s.clip;
             tempSource.volume = s.volume;
             tempSource.pitch = s.pitch;
-            tempSource.spatialBlend = 1f; // Make it 3D
+            tempSource.spatialBlend = 1f;
             tempSource.minDistance = 2f;
             tempSource.maxDistance = 20f;
             tempSource.rolloffMode = AudioRolloffMode.Linear;
