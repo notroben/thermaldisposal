@@ -82,6 +82,8 @@ public class FurnaceLogic : MonoBehaviour
 
         if (bagsToBurn > 0 && ServiceLocator.GameManager != null) ServiceLocator.GameManager.VerifyFurnaceHonesty(bagsToBurn);
 
+        List<GameObject> pendingDebris = new List<GameObject>();
+
         for (int i = itemsInside.Count - 1; i >= 0; i--)
         {
             GameObject item = itemsInside[i];
@@ -111,7 +113,7 @@ public class FurnaceLogic : MonoBehaviour
                     {
                         GameObject debris = Instantiate(bagData.excessTrashPrefab, item.transform.position, Quaternion.identity);
                         if (debris.GetComponent<DebrisLogic>() != null) debris.GetComponent<DebrisLogic>().CharDebris();
-                        itemsInside.Add(debris);
+                        pendingDebris.Add(debris);
                     }
                 }
 
@@ -135,13 +137,15 @@ public class FurnaceLogic : MonoBehaviour
                         DebrisLogic debrisLogic = spawnedObj.GetComponent<DebrisLogic>();
                         if (debrisLogic != null) debrisLogic.CharDebris();
 
-                        itemsInside.Add(spawnedObj);
+                        pendingDebris.Add(spawnedObj);
                     }
                 }
 
                 Destroy(item);
             }
         }
+
+        itemsInside.AddRange(pendingDebris);
 
         yield return new WaitForSeconds(5f);
         isProcessing = false;

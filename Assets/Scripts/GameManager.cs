@@ -11,6 +11,13 @@ public class GameManager : MonoBehaviour
     public DayData[] dayConfigs;
     public DayData CurrentDayData => (dayConfigs != null && currentDay <= dayConfigs.Length && currentDay > 0) ? dayConfigs[currentDay - 1] : null;
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    static void ResetStaticState()
+    {
+        globalDay = 1;
+        globalRuleBreakReason = "";
+    }
+
     [Header("Testing & Debug")]
     [Tooltip("Check this box to force the game to start on the Current Day number below")]
     public bool forceStartingDay = false;

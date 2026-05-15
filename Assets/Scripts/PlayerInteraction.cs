@@ -42,6 +42,12 @@ public class PlayerInteraction : MonoBehaviour
     private RaycastHit currentHit;
     private bool isHitting;
     private ExitDoor lastLookedAtExitDoor;
+    private FurnaceLogic cachedFurnace;
+
+    void Start()
+    {
+        cachedFurnace = UnityEngine.Object.FindFirstObjectByType<FurnaceLogic>();
+    }
 
     void Update()
     {
@@ -301,8 +307,7 @@ public class PlayerInteraction : MonoBehaviour
 
     void ToggleDoor()
     {
-        FurnaceLogic furnace = UnityEngine.Object.FindFirstObjectByType<FurnaceLogic>();
-        if (furnace != null && furnace.isProcessing)
+        if (cachedFurnace != null && cachedFurnace.isProcessing)
         {
             if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("FurnaceDoorFail", currentHit.point);
             return;

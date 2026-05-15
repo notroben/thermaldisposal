@@ -52,11 +52,6 @@ public class ScannerTool : MonoBehaviour
                             screenText.text = "<color=orange>ORGANIC\nMATTER\nDETECTED</color>";
                             if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("ErrorBeep", transform.position);
                         }
-                        else if (targetBag.hasMetal) // unnecessary, might be removed later
-                        {
-                            screenText.text = "<color=red>METAL\nDETECTED</color>";
-                            if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("ScannerBeep", transform.position);
-                        }
                         else
                         {
                             screenText.text = "<color=green>NO METAL\nDETECTED</color>";

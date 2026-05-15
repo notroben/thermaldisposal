@@ -23,12 +23,12 @@ public class EmptyBagLogic : MonoBehaviour
             currentTrash++;
 
             float puffAmount = (float)currentTrash / requiredTrash;
-            transform.localScale = Vector3.Lerp(startingScale, new Vector3((float)1.5, (float)1.5, (float)1.5), puffAmount);
+            transform.localScale = Vector3.Lerp(startingScale, new Vector3(1.5f, 1.5f, 1.5f), puffAmount);
 
             if (currentTrash >= requiredTrash)
             {
                 if (bagData != null) bagData.bagWeight = TrashBag_data.WeightCategory.Optimal;
-                transform.localScale = new Vector3((float)1.5, (float)1.5, (float)1.5);
+                transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
             }
         }
     }

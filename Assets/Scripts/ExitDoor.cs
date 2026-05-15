@@ -84,6 +84,7 @@ public class ExitDoor : MonoBehaviour
         else
         {
             gameManager.currentDay++;
+            GameManager.globalDay = gameManager.currentDay;
             Debug.Log("SYSTEM: Loading Day " + gameManager.currentDay + "...");
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }

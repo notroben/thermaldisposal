@@ -6,8 +6,6 @@ public class TrashBag_data : MonoBehaviour
     public enum WeightCategory { UnderLoad, Optimal, OverCapacity }
     public WeightCategory bagWeight = WeightCategory.Optimal;
 
-    public bool isOverweight;
-    public bool hasMetal; // might be removed later too idk
     public bool isOrganic = false;
 
     [Header("Rule Tracking")]

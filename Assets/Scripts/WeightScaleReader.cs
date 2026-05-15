@@ -52,7 +52,9 @@ public class WeightScaleReader : MonoBehaviour
                 scaleDisplay.text = "UNDER_LOAD";
                 scaleDisplay.color = Color.yellow;
             }
+            return;
         }
+
         if (other.CompareTag("Player"))
         {
             scaleDisplay.text = "OPTIMAL";
