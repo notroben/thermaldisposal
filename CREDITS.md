@@ -59,7 +59,23 @@ This document lists all third-party assets used in the development of *Thermal D
 ## 3D Models & Assets
 | Asset Name | Author | License | Link |
 | :--- | :--- | :--- | :--- |
-| Placeholder | Creator | CC0 | [Link]() |
+| Vario PSX Style - Han66st | Han66st | CC-BY 4.0 | [Sketchfab](https://skfb.ly/pxIKt) |
+| Clipboard | AlysiaC | CC-BY 4.0 | [Sketchfab](https://skfb.ly/oEVZp) |
+| Low-Poly PSX Style Industrial Metal Doors Pack | Icevanilla | CC-BY 4.0 | [Sketchfab](https://skfb.ly/pFQEV) |
+| Old Lowpoly Furniture | Wardster | CC-BY 4.0 | [Sketchfab](https://skfb.ly/oWFyP) |
+| Exploration Objects | Elbolillo | CC-BY 4.0 | [Sketchfab](https://skfb.ly/oSXMq) |
+| Deds Others | Elbolillo | CC-BY 4.0 | [Sketchfab](https://skfb.ly/ouVrR) |
+| PSX-Styled Bloody Shovel | monke | CC-BY 4.0 | [Sketchfab](https://skfb.ly/oP7oA) |
+| Shaving Cream & Razor PSX | Bonvikt | CC-BY 4.0 | [Sketchfab](https://skfb.ly/purRS) |
+| PSX Headphones | emnix | CC-BY 4.0 | [Sketchfab](https://skfb.ly/pCI77) |
+| PSX Low-Poly Retro Gadgets | INT | CC-BY 4.0 | [Sketchfab](https://skfb.ly/pB88O) |
+| Argentina Bolillo/Roll On Rexona - Psx | argsfds | CC-BY 4.0 | [Sketchfab](https://skfb.ly/pyFsY) |
+| 320GB SATA III 3,5" HDD | TymonG | CC-BY 4.0 | [Sketchfab](https://skfb.ly/pIoPy) |
+| Smart TV Remote PSX Style — Low-Poly 3D Model | adamsite | CC0 | [Sketchfab](https://skfb.ly/pDrrJ) |
+| BMW M3 GTR - PSX Style (MW 2012 Java) | YourLocalJavaCarDealer | CC-BY 4.0 | [Sketchfab](https://skfb.ly/pzvxn) |
+| Low Poly 90s Office Cubicle | NobleCrowDev | CC-BY 4.0 | [Sketchfab](https://skfb.ly/prP6R) |
+| Cat - PS1 Low Poly (Rigged) | Wersaus33 | CC-BY 4.0 | [Sketchfab](https://skfb.ly/oFEPp) |
+| PS1/PSX/Retro Male Base (Version 2) | Firewarden3D | CC-BY 4.0 | [Sketchfab](https://skfb.ly/oVxMA) |
 
 ---
 
@@ -67,3 +83,12 @@ This document lists all third-party assets used in the development of *Thermal D
 | Asset Name | Author | License | Link |
 | :--- | :--- | :--- | :--- |
 | Placeholder | Creator | CC0 | [Link]() |
+| Concrete Bare Dirty | SketchupTextureClub | CC-BY 4.0 | [SketchupTextureClub](https://www.sketchuptextureclub.com/public/texture_d/18-concrete-bare-dirty-texture-seamless-hr.jpg) |
+| wallpaper | ? | ? | [Pinterest](https://id.pinterest.com/pin/1076501117187069591/) |
+| Grey galvanized smooth clean steel metal sheet seamless surface texture.jpg | Sisters.seamless | CC0 | [Wikimedia](https://commons.wikimedia.org/wiki/File:Grey_galvanized_smooth_clean_steel_metal_sheet_seamless_surface_texture.jpg) |
+| V-Type-Pattern-Chevron-Conveyor-Rubber-Belt.webp | ? | ? | [Google](https://image.made-in-china.com/202f0j00PJjQTmyIMhbN/V-Type-Pattern-Chevron-Conveyor-Rubber-Belt.webp) |
+| IncStores 1/2 Inch Thick Grid-Loc Interlocking Garage Floor Tiles | Plastic Flooring for a Stronger and Safer Garage, Workshop, Shed, or Trailer | Diamond-Top, Shelby Blue, 12 Pack | IncStores | ? | [Amazon](https://www.amazon.eg/-/en/IncStores-Grid-Loc-Interlocking-Flooring-Diamond-Top/dp/B00P9UJ6QK) |
+| rusted-steel-wall-panels-sheet-metal-panel-extensive-rust-patination-square-rectangular | ? | ? | [Dreamstime](https://thumbs.dreamstime.com/b/rusted-steel-wall-panels-sheet-metal-panel-extensive-rust-patination-square-rectangular-102261821.jpg) |
+| 1PCS Chimney Access Door for Fireplace Firewood Ash Dump Wood Stove Door Replacement Vertical / Horizontal Furnace | Shop1102927645 Store | ? | [AliExpress](https://www.aliexpress.com/item/1005008978572803.html) |
+| box-furnace-hot | internationalthermalsystems | ? | [InternationalThermalSystems](https://www.internationalthermalsystems.com/wp-content/uploads/2019/04/box-furnace-hot.png) |
+| Broken black eyeshadow powder background | rawpixel.com | ? | [Magnific](https://www.magnific.com/free-photo/broken-black-eyeshadow-powder-background_15438856.htm#fromView=keyword&page=1&position=0&uuid=b1713a8d-d454-4bda-87f2-36ff2581c818&query=Texture+coal) |

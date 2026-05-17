@@ -9,7 +9,14 @@ public class ConveyorBelt : MonoBehaviour
     [Header("System Status")]
     public bool isBroken = false;
 
+    [Header("Belt Visual")]
+    public Renderer beltRenderer;
+    public float textureScrollSpeed = 0.5f;
+    [Tooltip("Which UV axis to scroll: X or Y. Depends on your texture orientation.")]
+    public bool scrollAxisX = false;
+
     private Rigidbody rb;
+    private Material beltMaterial;
 
     void Start()
     {
@@ -17,6 +24,11 @@ public class ConveyorBelt : MonoBehaviour
         if (rb == null)
         {
             Debug.LogWarning("ConveyorBelt requires a Rigidbody component set to Is Kinematic!");
+        }
+
+        if (beltRenderer != null)
+        {
+            beltMaterial = beltRenderer.material;
         }
     }
 
@@ -27,5 +39,14 @@ public class ConveyorBelt : MonoBehaviour
         Vector3 currentPos = rb.position;
         rb.position -= moveDirection.normalized * speed * Time.fixedDeltaTime;
         rb.MovePosition(currentPos);
+
+        // Scroll belt texture to match physical movement
+        if (beltMaterial != null)
+        {
+            Vector2 offset = beltMaterial.mainTextureOffset;
+            if (scrollAxisX) offset.x += textureScrollSpeed * Time.fixedDeltaTime;
+            else offset.y += textureScrollSpeed * Time.fixedDeltaTime;
+            beltMaterial.mainTextureOffset = offset;
+        }
     }
 }

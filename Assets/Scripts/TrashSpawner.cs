@@ -6,8 +6,12 @@ public class TrashSpawner : MonoBehaviour
     [Header("Spawner Settings")]
     public GameObject trashBagPrefab;
     public GameObject organicBagPrefab;
+    public GameObject overCapacityBagPrefab;
     public GameObject emptyBagPrefab;
     public Transform emptyBagSpawnPoint;
+
+    [Header("Excess Trash Variants")]
+    public GameObject[] excessTrashPrefabs;
 
     [Header("Spawning Rules")]
     public int maxBags = 10;
@@ -86,13 +90,24 @@ public class TrashSpawner : MonoBehaviour
         }
 
         GameObject newBag;
-        if (spawnOrganic) newBag = Instantiate(organicBagPrefab, transform.position, Quaternion.identity);
-        else newBag = Instantiate(trashBagPrefab, transform.position, Quaternion.identity);
-
-        if (spawnHeavy)
+        if (spawnHeavy && overCapacityBagPrefab != null)
         {
+            newBag = Instantiate(overCapacityBagPrefab, transform.position, Quaternion.identity);
+
+            // Assign a random excess trash prefab to this bag
             TrashBag_data data = newBag.GetComponent<TrashBag_data>();
-            if (data != null) data.bagWeight = TrashBag_data.WeightCategory.OverCapacity;
+            if (data != null && excessTrashPrefabs.Length > 0)
+            {
+                data.excessTrashPrefab = excessTrashPrefabs[Random.Range(0, excessTrashPrefabs.Length)];
+            }
+        }
+        else if (spawnOrganic)
+        {
+            newBag = Instantiate(organicBagPrefab, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            newBag = Instantiate(trashBagPrefab, transform.position, Quaternion.identity);
         }
     }
 

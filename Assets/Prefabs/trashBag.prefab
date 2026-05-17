@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5976279289620639315
+--- !u!1 &1518586140248857560
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,50 +8,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7457637536334143457}
-  - component: {fileID: 7665373305867855169}
-  - component: {fileID: 3900680446437228225}
-  - component: {fileID: 7331081805114434580}
-  - component: {fileID: 8874717015323666504}
-  - component: {fileID: 4780256315053078513}
-  - component: {fileID: 4267655733740709549}
-  m_Layer: 3
-  m_Name: trashBag
+  - component: {fileID: 2186720411405582690}
+  - component: {fileID: 3023904596933349063}
+  - component: {fileID: 1014407762629818893}
+  m_Layer: 0
+  m_Name: TrashBag_Closed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7457637536334143457
+--- !u!4 &2186720411405582690
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5976279289620639315}
+  m_GameObject: {fileID: 1518586140248857560}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4, y: 1, z: 5.92}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 7457637536334143457}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7665373305867855169
+--- !u!33 &3023904596933349063
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5976279289620639315}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &3900680446437228225
+  m_GameObject: {fileID: 1518586140248857560}
+  m_Mesh: {fileID: 7948860444370174363, guid: b951cce4b8be88b439724521b15a219e, type: 3}
+--- !u!23 &1014407762629818893
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5976279289620639315}
+  m_GameObject: {fileID: 1518586140248857560}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -70,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4d338906e9b321d4b872b01f3b078a02, type: 2}
+  - {fileID: 2100000, guid: 2a365001e25d9e94abb44375b5654381, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -94,48 +90,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &7331081805114434580
-SphereCollider:
+--- !u!1 &5976279289620639315
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7457637536334143457}
+  - component: {fileID: 4780256315053078513}
+  - component: {fileID: 2008832948999108074}
+  - component: {fileID: 8874717015323666504}
+  - component: {fileID: 4267655733740709549}
+  m_Layer: 3
+  m_Name: trashBag
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7457637536334143457
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5976279289620639315}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8874717015323666504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5976279289620639315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cde89bb7638e2f4c947d46fff937687, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::trashBag_data
-  bagWeight: 1
-  isOverweight: 0
-  hasMetal: 0
-  isOrganic: 0
-  hasBeenWeighed: 0
-  hasBeenRecorded: 0
-  isOpen: 0
-  isSealed: 0
-  excessTrashPrefab: {fileID: 3705699794991296653, guid: 52a8dadaf7fa61c458a77c2060fb1a5d, type: 3}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2186720411405582690}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &4780256315053078513
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -163,6 +153,49 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &2008832948999108074
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5976279289620639315}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7948860444370174363, guid: b951cce4b8be88b439724521b15a219e, type: 3}
+--- !u!114 &8874717015323666504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5976279289620639315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cde89bb7638e2f4c947d46fff937687, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::trashBag_data
+  bagWeight: 1
+  isOrganic: 0
+  hasBeenWeighed: 0
+  hasBeenRecorded: 0
+  isOpen: 0
+  isSealed: 0
+  excessTrashPrefab: {fileID: 3705699794991296653, guid: 52a8dadaf7fa61c458a77c2060fb1a5d, type: 3}
+  closedModel: {fileID: 1518586140248857560}
+  openedModel: {fileID: 0}
 --- !u!114 &4267655733740709549
 MonoBehaviour:
   m_ObjectHideFlags: 0

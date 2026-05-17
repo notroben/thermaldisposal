@@ -28,48 +28,20 @@ public class WeightScaleReader : MonoBehaviour
         {
             if (!bagData.hasBeenWeighed)
             {
-                if (gameManager != null && gameManager.physicalWeighedCount > gameManager.uiCrossedOutCount)
-                {
-                    GameEvents.OnTriggerGameOver?.Invoke(RuleBreak.ScaleUnfinalized);
-                }
+                if (gameManager != null && gameManager.physicalWeighedCount > gameManager.uiCrossedOutCount) GameEvents.OnTriggerGameOver?.Invoke(RuleBreak.ScaleUnfinalized);
 
                 bagData.hasBeenWeighed = true;
                 if (gameManager != null) gameManager.physicalWeighedCount++;
             }
 
-            if (bagData.bagWeight == TrashBag_data.WeightCategory.Optimal)
-            {
-                scaleDisplay.text = "OPTIMAL";
-                scaleDisplay.color = Color.green;
-            }
-            else if (bagData.bagWeight == TrashBag_data.WeightCategory.OverCapacity)
-            {
-                scaleDisplay.text = "OVER_CAPACITY";
-                scaleDisplay.color = Color.red;
-            }
-            else
-            {
-                scaleDisplay.text = "UNDER_LOAD";
-                scaleDisplay.color = Color.yellow;
-            }
+            if (bagData.bagWeight == TrashBag_data.WeightCategory.Optimal) scaleDisplay.text = "OPTIMAL";
+            else if (bagData.bagWeight == TrashBag_data.WeightCategory.OverCapacity) scaleDisplay.text = "OVER\nCAPACITY";
+            else scaleDisplay.text = "UNDER\nLOAD";
             return;
         }
 
-        if (other.CompareTag("Player"))
-        {
-            scaleDisplay.text = "OPTIMAL";
-            scaleDisplay.color = Color.green;
-        }
-        else if (other.CompareTag("Tool"))
-        {
-            scaleDisplay.text = "INVALID";
-            scaleDisplay.color = Color.yellow;
-        }
-        else if (other.CompareTag("ExcessTrash"))
-        {
-            scaleDisplay.text = "INVALID";
-            scaleDisplay.color = Color.yellow;
-        }
+        if (other.CompareTag("Player")) scaleDisplay.text = "OPTIMAL";
+        else if (other.CompareTag("Tool") || other.CompareTag("ExcessTrash")) scaleDisplay.text = "INVALID";
     }
 
     void OnTriggerExit(Collider other)
@@ -84,6 +56,5 @@ public class WeightScaleReader : MonoBehaviour
     void ResetScale()
     {
         scaleDisplay.text = "EMPTY";
-        scaleDisplay.color = Color.white;
     }
 }

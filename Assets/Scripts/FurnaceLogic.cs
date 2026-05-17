@@ -30,7 +30,7 @@ public class FurnaceLogic : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<TrashBag_data>() != null || other.CompareTag("Player") || other.CompareTag("Tool") || other.GetComponent<DebrisLogic>() != null)
+        if (other.GetComponent<TrashBag_data>() != null || other.CompareTag("Player") || other.CompareTag("Tool") || other.GetComponent<DebrisLogic>() != null || other.CompareTag("ExcessTrash"))
         {
             if (!itemsInside.Contains(other.gameObject)) itemsInside.Add(other.gameObject);
         }
@@ -88,7 +88,7 @@ public class FurnaceLogic : MonoBehaviour
         {
             GameObject item = itemsInside[i];
 
-            if (item.CompareTag("Player"))
+            if (item.CompareTag("Player") && ServiceLocator.GameManager.CurrentDayData.isFinalDay)
             {
                 TriggerEndingSequence();
             }

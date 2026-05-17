@@ -3,13 +3,13 @@ using UnityEngine;
 public class DebrisLogic : MonoBehaviour
 {
     [Header("Debris State")]
-    public bool isCharred = false; // BLACKWASHING!
+    public bool isCharred = false; // BLACKWASHING!!!
 
-    private MeshRenderer meshRenderer;
+    private MeshRenderer[] meshRenderers;
 
     void Start()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderers = GetComponentsInChildren<MeshRenderer>();
         if (isCharred) ApplyCharVisual();
     }
 
@@ -18,14 +18,21 @@ public class DebrisLogic : MonoBehaviour
         if (isCharred) return;
 
         isCharred = true;
+
+        if (meshRenderers == null || meshRenderers.Length == 0)
+            meshRenderers = GetComponentsInChildren<MeshRenderer>();
+
         ApplyCharVisual();
     }
 
     void ApplyCharVisual()
     {
-        if (meshRenderer != null)
+        if (meshRenderers != null)
         {
-            meshRenderer.material.color = new Color(0.1f, 0.1f, 0.1f);
+            foreach (MeshRenderer mr in meshRenderers)
+            {
+                mr.material.color = new Color(0.1f, 0.1f, 0.1f);
+            }
         }
 
         gameObject.layer = 0;

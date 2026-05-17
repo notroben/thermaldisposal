@@ -16,7 +16,7 @@ MonoBehaviour:
   directiveText: 'DAY X DIRECTIVE:
 
     ...'
-  conveyorBroken: 0
+  conveyorBroken: 1
   unlockScanner: 0
   unlockIronPoker: 0
   showTaskList: 1

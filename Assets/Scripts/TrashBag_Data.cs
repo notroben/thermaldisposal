@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 public class TrashBag_data : MonoBehaviour
@@ -17,12 +16,9 @@ public class TrashBag_data : MonoBehaviour
     public bool isSealed = false;
     public GameObject excessTrashPrefab;
 
-    private MeshRenderer meshRenderer;
-
-    private void Start()
-    {
-        meshRenderer = GetComponent<MeshRenderer>();
-    }
+    [Header("Model References")]
+    public GameObject closedModel;
+    public GameObject openedModel;
 
     public void OpenBag()
     {
@@ -30,7 +26,8 @@ public class TrashBag_data : MonoBehaviour
 
         isOpen = true;
 
-        if (meshRenderer != null) meshRenderer.material.color = new Color(0.8f, 0.2f, 0.2f);
+        if (closedModel != null) closedModel.SetActive(false);
+        if (openedModel != null) openedModel.SetActive(true);
 
         if (excessTrashPrefab != null)
         {
@@ -50,6 +47,7 @@ public class TrashBag_data : MonoBehaviour
         isSealed = true;
         bagWeight = WeightCategory.Optimal;
 
-        if (meshRenderer != null) meshRenderer.material.color = new Color(0.3f, 0.3f, 0.3f);
+        if (openedModel != null) openedModel.SetActive(false);
+        if (closedModel != null) closedModel.SetActive(true);
     }
 }

@@ -323,6 +323,9 @@ public class PlayerInteraction : MonoBehaviour
         {
             Vector3 moveDirection = holdPosition.position - heldObject.transform.position;
             heldObjRb.linearVelocity = moveDirection * grabForce;
+
+            Quaternion uprightTarget = Quaternion.Euler(0, heldObject.transform.eulerAngles.y, 0);
+            heldObject.transform.rotation = Quaternion.Slerp(heldObject.transform.rotation, uprightTarget, Time.fixedDeltaTime * grabForce);
         }
     }
 
@@ -340,6 +343,7 @@ public class PlayerInteraction : MonoBehaviour
                 else if (pickObj.GetComponent<ClipboardTool>() != null) ServiceLocator.AudioManager.PlayGlobalSFX("ClipboardPickup");
                 else ServiceLocator.AudioManager.PlayGlobalSFX("PickupTool");
             }
+            else if (pickObj.CompareTag("ExcessTrash")) ServiceLocator.AudioManager.PlayGlobalSFX("PickupTool");
             else ServiceLocator.AudioManager.PlayGlobalSFX("PickupBag");
         }
 
@@ -348,10 +352,7 @@ public class PlayerInteraction : MonoBehaviour
             isHoldingTool = true;
             if (heldObjRb != null) heldObjRb.isKinematic = true;
 
-            if (heldObjColliders != null)
-            {
-                foreach (Collider col in heldObjColliders) col.isTrigger = true;
-            }
+            if (heldObjColliders != null) foreach (Collider col in heldObjColliders) col.isTrigger = true;
 
             heldObject.transform.SetParent(transform);
 
@@ -387,10 +388,8 @@ public class PlayerInteraction : MonoBehaviour
                 else if (heldObject.GetComponent<ClipboardTool>() != null) ServiceLocator.AudioManager.PlayGlobalSFX("ClipboardDrop");
                 else ServiceLocator.AudioManager.PlayGlobalSFX("DropTool");
             }
-            else 
-            {
-                ServiceLocator.AudioManager.PlayGlobalSFX("PickupBag");
-            }
+            else if (heldObject.CompareTag("ExcessTrash")) ServiceLocator.AudioManager.PlayGlobalSFX("PickupTool");
+            else ServiceLocator.AudioManager.PlayGlobalSFX("PickupBag");
         }
 
         ClipboardTool clipboard = heldObject.GetComponent<ClipboardTool>();
@@ -404,11 +403,7 @@ public class PlayerInteraction : MonoBehaviour
         if (isHoldingTool)
         {
             if (heldObjRb != null) heldObjRb.isKinematic = false;
-
-            if (heldObjColliders != null)
-            {
-                foreach (Collider col in heldObjColliders) col.isTrigger = false;
-            }
+            if (heldObjColliders != null) foreach (Collider col in heldObjColliders) col.isTrigger = false;
         }
         else
         {
@@ -419,7 +414,6 @@ public class PlayerInteraction : MonoBehaviour
                 heldObjRb.freezeRotation = false;
             }
         }
-
         heldObject = null;
     }
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DayData
   dailyQuota: 10
   directiveText: DAY 7 DIRECTIVE:\nProcess the final unit.
-  conveyorBroken: 0
+  conveyorBroken: 1
   unlockScanner: 1
   unlockIronPoker: 1
   showTaskList: 1
