@@ -28,7 +28,7 @@ public class ScannerTool : MonoBehaviour
 
             foreach (RaycastHit hit in hits)
             {
-                TrashBag_data bag = hit.collider.GetComponent<TrashBag_data>();
+                TrashBag_data bag = hit.collider.GetComponentInParent<TrashBag_data>();
                 if (bag != null)
                 {
                     targetBag = bag;

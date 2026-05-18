@@ -22,7 +22,7 @@ public class WeightScaleReader : MonoBehaviour
     {
         currentCollider = other;
         if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("ScaleBeep", transform.position);
-        TrashBag_data bagData = other.GetComponent<TrashBag_data>();
+        TrashBag_data bagData = other.GetComponentInParent<TrashBag_data>();
 
         if (bagData != null)
         {

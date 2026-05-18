@@ -30,15 +30,40 @@ public class FurnaceLogic : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<TrashBag_data>() != null || other.CompareTag("Player") || other.CompareTag("Tool") || other.GetComponent<DebrisLogic>() != null || other.CompareTag("ExcessTrash"))
+        GameObject resolved = ResolveObject(other);
+        if (resolved != null && !itemsInside.Contains(resolved))
         {
-            if (!itemsInside.Contains(other.gameObject)) itemsInside.Add(other.gameObject);
+            itemsInside.Add(resolved);
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (itemsInside.Contains(other.gameObject)) itemsInside.Remove(other.gameObject);
+        GameObject resolved = ResolveObject(other);
+        if (resolved != null) itemsInside.Remove(resolved);
+    }
+
+    GameObject ResolveObject(Collider col)
+    {
+        TrashBag_data bag = col.GetComponentInParent<TrashBag_data>();
+        if (bag != null) return bag.gameObject;
+
+        DebrisLogic debris = col.GetComponentInParent<DebrisLogic>();
+        if (debris != null) return debris.gameObject;
+
+        if (col.CompareTag("Player") || col.CompareTag("Tool") || col.CompareTag("ExcessTrash"))
+            return col.gameObject;
+
+        return null;
+    }
+
+    bool HasAnyActiveCollider(GameObject obj)
+    {
+        foreach (Collider col in obj.GetComponentsInChildren<Collider>())
+        {
+            if (col.enabled) return true;
+        }
+        return false;
     }
 
     public void ActivateFurnace()
@@ -66,7 +91,7 @@ public class FurnaceLogic : MonoBehaviour
             ServiceLocator.AudioManager.PlaySFXAtPosition("FurnaceRoar", transform.position);
         } 
 
-        itemsInside.RemoveAll(item => item == null || !item.activeInHierarchy || (item.GetComponent<Collider>() != null && !item.GetComponent<Collider>().enabled));
+        itemsInside.RemoveAll(item => item == null || !item.activeInHierarchy || !HasAnyActiveCollider(item));
 
         int bagsToBurn = 0;
         int charredDebrisCount = 0;

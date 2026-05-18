@@ -216,7 +216,8 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (isHitting)
         {
-            TrashBag_data bag = currentHit.collider.GetComponent<TrashBag_data>();
+            GameObject obj = currentHit.collider.attachedRigidbody != null ? currentHit.collider.attachedRigidbody.gameObject : currentHit.collider.gameObject;
+            TrashBag_data bag = obj.GetComponent<TrashBag_data>();
 
             if (bag != null && bag.bagWeight == TrashBag_data.WeightCategory.OverCapacity && !bag.isSealed)
             {
