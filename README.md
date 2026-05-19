@@ -7,6 +7,10 @@
 
 ---
 
+# CONTAINS SPOILERS. READ AT YOUR OWN RISK.
+
+---
+
 ## 1. Game Overview & High Concept
 *Thermal Disposal* is a first-person simulation where the player acts as a waste disposal operator in a brutalist, underground industrial facility. What begins as a repetitive, mundane job of processing trash bags on a conveyor belt slowly descends into psychological and cosmic horror as the "trash" becomes increasingly disturbing.
 
