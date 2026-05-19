@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DebrisLogic
   isCharred: 0
+  charredMaterial: {fileID: 2100000, guid: 31b182b1817231641b24c20e06624d13, type: 2}
 --- !u!114 &4022279222802892052
 MonoBehaviour:
   m_ObjectHideFlags: 0

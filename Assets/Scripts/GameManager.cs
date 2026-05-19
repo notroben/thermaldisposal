@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
         if (alarmSystem != null) alarmSystem.SetActive(true);
         if (gameOverCanvas != null) gameOverCanvas.SetActive(false);
 
-        yield return new WaitForSeconds(16f);
+        yield return new WaitForSeconds(10f);
 
         if (gameOverCanvas != null) gameOverCanvas.SetActive(true);
         if (alarmSystem != null) alarmSystem.SetActive(false);

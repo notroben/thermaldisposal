@@ -56,6 +56,14 @@ public class PauseMenuManager : MonoBehaviour
 
     public void Resume()
     {
+        // Force-unfocus clipboard if held (prevents canLook/canMove desync)
+        PlayerInteraction pi = UnityEngine.Object.FindFirstObjectByType<PlayerInteraction>();
+        if (pi != null && pi.heldObject != null)
+        {
+            ClipboardTool clipboard = pi.heldObject.GetComponent<ClipboardTool>();
+            if (clipboard != null && clipboard.isFocused) clipboard.ToggleFocus(false);
+        }
+
         isPaused = false;
         if (pausePanel != null) pausePanel.SetActive(false);
         if (settingsPanel != null) settingsPanel.SetActive(false);
@@ -100,6 +108,8 @@ public class PauseMenuManager : MonoBehaviour
     public void OnQuitToMenu()
     {
         Time.timeScale = 1f;
+        GameManager.globalDay = 1;
+        GameManager.globalRuleBreakReason = "";
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         SceneManager.LoadScene("MainMenu");

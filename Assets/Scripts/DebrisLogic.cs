@@ -3,7 +3,10 @@ using UnityEngine;
 public class DebrisLogic : MonoBehaviour
 {
     [Header("Debris State")]
-    public bool isCharred = false; // BLACKWASHING!!!
+    public bool isCharred = false;
+
+    [Header("Visual")]
+    public Material charredMaterial; // BLACKWASHING!!!
 
     private MeshRenderer[] meshRenderers;
 
@@ -31,7 +34,10 @@ public class DebrisLogic : MonoBehaviour
         {
             foreach (MeshRenderer mr in meshRenderers)
             {
-                mr.material.color = new Color(0.1f, 0.1f, 0.1f);
+                if (charredMaterial != null)
+                    mr.sharedMaterial = charredMaterial;
+                else
+                    mr.material.color = new Color(0.1f, 0.1f, 0.1f);
             }
         }
 

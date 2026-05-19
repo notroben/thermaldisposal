@@ -28,6 +28,8 @@ public class OrganicJitter : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0f) return;
+
         if (Time.time >= nextSpasmStartTime)
         {
             if (Time.time <= currentSpasmEndTime)

@@ -38,7 +38,11 @@ public class ExitDoor : MonoBehaviour
             float holdProgress = currentHoldTime / requiredHoldTime;
 
             if (holdIndicator != null) holdIndicator.fillAmount = holdProgress;
-            if (currentHoldTime >= requiredHoldTime) StartCoroutine(EndShiftRoutine());
+            if (currentHoldTime >= requiredHoldTime)
+            {
+                isFading = true;
+                StartCoroutine(EndShiftRoutine());
+            }
         }
         else
         {

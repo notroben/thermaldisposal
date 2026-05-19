@@ -15500,8 +15500,8 @@ MonoBehaviour:
   - {fileID: 3678099939951936393, guid: 908c4efda429c4544bf6c2d698faa298, type: 3}
   - {fileID: 7216198821898276528, guid: e0c50a7998925de48af139acd2c4a40e, type: 3}
   maxBags: 10
-  minSpawnTime: 5
-  maxSpawnTime: 5
+  minSpawnTime: 45
+  maxSpawnTime: 75
 --- !u!4 &1651913783
 Transform:
   m_ObjectHideFlags: 0

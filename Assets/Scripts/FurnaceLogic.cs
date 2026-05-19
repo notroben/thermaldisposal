@@ -106,13 +106,16 @@ public class FurnaceLogic : MonoBehaviour
         for (int i = itemsInside.Count - 1; i >= 0; i--)
         {
             GameObject item = itemsInside[i];
-            if (item.CompareTag("Player") && ServiceLocator.GameManager.CurrentDayData.isFinalDay) TriggerEndingSequence();
+            if (item.CompareTag("Player") && ServiceLocator.GameManager != null && ServiceLocator.GameManager.CurrentDayData != null && ServiceLocator.GameManager.CurrentDayData.isFinalDay) TriggerEndingSequence();
             else if (item.CompareTag("Tool"))
             {
                 GameEvents.OnTriggerGameOver?.Invoke(RuleBreak.PropertyDestruction);
                 Destroy(item);
             }
-            else if (item.GetComponent<DebrisLogic>() != null) item.GetComponent<DebrisLogic>().CharDebris();
+            else if (item.GetComponent<DebrisLogic>() is DebrisLogic d)
+            {
+                d.CharDebris();
+            }
             else if (item.GetComponent<TrashBag_data>() != null)
             {
                 TrashBag_data bagData = item.GetComponent<TrashBag_data>();

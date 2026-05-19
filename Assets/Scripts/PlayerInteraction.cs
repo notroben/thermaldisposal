@@ -51,6 +51,37 @@ public class PlayerInteraction : MonoBehaviour
 
     void Update()
     {
+        if (isHoldingTool && heldObject != null)
+        {
+            Vector3 targetPos = activeToolPosition + toolAnimOffset;
+            float currentSpeed = (toolAnimOffset != Vector3.zero) ? toolEquipSpeed * 3f : toolEquipSpeed;
+            heldObject.transform.localPosition = Vector3.Lerp(heldObject.transform.localPosition, targetPos, Time.deltaTime * currentSpeed);
+            heldObject.transform.localRotation = Quaternion.Slerp(heldObject.transform.localRotation, Quaternion.Euler(activeToolRotation), Time.deltaTime * currentSpeed);
+        }
+
+        PlayerController pc = ServiceLocator.PlayerController;
+        bool controlsDisabled = pc != null && (!pc.canLook || !pc.canMove);
+
+        if (controlsDisabled)
+        {
+            UpdateInteractionUI();
+
+            if (Input.GetMouseButtonDown(1) && heldObject != null)
+            {
+                ClipboardTool clipboard = heldObject.GetComponent<ClipboardTool>();
+                if (clipboard != null) clipboard.ToggleFocus(false);
+            }
+
+            if (furnaceDoorHinge != null)
+            {
+                float targetAngle = isDoorOpen ? doorOpenAngle : 0f;
+                currentDoorAngle = Mathf.Lerp(currentDoorAngle, targetAngle, Time.deltaTime * doorSpeed);
+                furnaceDoorHinge.localRotation = Quaternion.Euler(0f, currentDoorAngle, 0f);
+            }
+
+            return;
+        }
+
         Ray ray = new Ray(transform.position, transform.forward);
         isHitting = Physics.Raycast(ray, out currentHit, interactionDistance, interactableMask);
 
@@ -112,16 +143,6 @@ public class PlayerInteraction : MonoBehaviour
             float targetAngle = isDoorOpen ? doorOpenAngle : 0f;
             currentDoorAngle = Mathf.Lerp(currentDoorAngle, targetAngle, Time.deltaTime * doorSpeed);
             furnaceDoorHinge.localRotation = Quaternion.Euler(0f, currentDoorAngle, 0f);
-        }
-
-        if (isHoldingTool && heldObject != null)
-        {
-            Vector3 targetPos = activeToolPosition + toolAnimOffset;
-
-            float currentSpeed = (toolAnimOffset != Vector3.zero) ? toolEquipSpeed * 3f : toolEquipSpeed;
-
-            heldObject.transform.localPosition = Vector3.Lerp(heldObject.transform.localPosition, targetPos, Time.deltaTime * currentSpeed);
-            heldObject.transform.localRotation = Quaternion.Slerp(heldObject.transform.localRotation, Quaternion.Euler(activeToolRotation), Time.deltaTime * currentSpeed);
         }
     }
 
