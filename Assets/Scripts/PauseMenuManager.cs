@@ -21,6 +21,7 @@ public class PauseMenuManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (settingsPanel != null && settingsPanel.activeSelf) OnBackToPause();
+            else if (tutorialPanel != null && tutorialPanel.activeSelf) OnBackToPause();
             else TogglePause();
         }
     }
