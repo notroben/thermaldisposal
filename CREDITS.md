@@ -53,6 +53,7 @@ This document lists all third-party assets used in the development of *Thermal D
 | Bamboo Swing, C4.wav | InspectorJ | CC-BY 4.0 | [Freesound](https://freesound.org/s/394457/) |
 | Thing.wav | _bepis | CC-BY 4.0 | [Freesound](https://freesound.org/s/415198/) |
 | PickupBook1.wav | jomse | CC-BY 4.0 | [Freesound](https://freesound.org/s/428666/) |
+| Metal Knocking | BenjaminNelan | CC0 | [Freesound](https://freesound.org/s/410362/) |
 
 ---
 
@@ -76,18 +77,18 @@ This document lists all third-party assets used in the development of *Thermal D
 | Low Poly 90s Office Cubicle | NobleCrowDev | CC-BY 4.0 | [Sketchfab](https://skfb.ly/prP6R) |
 | Cat - PS1 Low Poly (Rigged) | Wersaus33 | CC-BY 4.0 | [Sketchfab](https://skfb.ly/oFEPp) |
 | PS1/PSX/Retro Male Base (Version 2) | Firewarden3D | CC-BY 4.0 | [Sketchfab](https://skfb.ly/oVxMA) |
+| Low-poly CCTV Camera | Microchip | CC-BY 4.0 | [Sketchfab](https://skfb.ly/oQqrK) |
 
 ---
 
 ## Textures & Images
 | Asset Name | Author | License | Link |
 | :--- | :--- | :--- | :--- |
-| Placeholder | Creator | CC0 | [Link]() |
 | Concrete Bare Dirty | SketchupTextureClub | CC-BY 4.0 | [SketchupTextureClub](https://www.sketchuptextureclub.com/public/texture_d/18-concrete-bare-dirty-texture-seamless-hr.jpg) |
 | wallpaper | ? | ? | [Pinterest](https://id.pinterest.com/pin/1076501117187069591/) |
 | Grey galvanized smooth clean steel metal sheet seamless surface texture.jpg | Sisters.seamless | CC0 | [Wikimedia](https://commons.wikimedia.org/wiki/File:Grey_galvanized_smooth_clean_steel_metal_sheet_seamless_surface_texture.jpg) |
 | V-Type-Pattern-Chevron-Conveyor-Rubber-Belt.webp | ? | ? | [Google](https://image.made-in-china.com/202f0j00PJjQTmyIMhbN/V-Type-Pattern-Chevron-Conveyor-Rubber-Belt.webp) |
-| IncStores 1/2 Inch Thick Grid-Loc Interlocking Garage Floor Tiles | Plastic Flooring for a Stronger and Safer Garage, Workshop, Shed, or Trailer | Diamond-Top, Shelby Blue, 12 Pack | IncStores | ? | [Amazon](https://www.amazon.eg/-/en/IncStores-Grid-Loc-Interlocking-Flooring-Diamond-Top/dp/B00P9UJ6QK) |
+| IncStores 1/2 Inch Thick Grid-Loc Interlocking Garage Floor Tiles Plastic Flooring for a Stronger and Safer Garage, Workshop, Shed, or Trailer Diamond-Top, Shelby Blue, 12 Pack | IncStores | ? | [Amazon](https://www.amazon.eg/-/en/IncStores-Grid-Loc-Interlocking-Flooring-Diamond-Top/dp/B00P9UJ6QK) |
 | rusted-steel-wall-panels-sheet-metal-panel-extensive-rust-patination-square-rectangular | ? | ? | [Dreamstime](https://thumbs.dreamstime.com/b/rusted-steel-wall-panels-sheet-metal-panel-extensive-rust-patination-square-rectangular-102261821.jpg) |
 | 1PCS Chimney Access Door for Fireplace Firewood Ash Dump Wood Stove Door Replacement Vertical / Horizontal Furnace | Shop1102927645 Store | ? | [AliExpress](https://www.aliexpress.com/item/1005008978572803.html) |
 | box-furnace-hot | internationalthermalsystems | ? | [InternationalThermalSystems](https://www.internationalthermalsystems.com/wp-content/uploads/2019/04/box-furnace-hot.png) |

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections;
 
@@ -19,7 +20,6 @@ public class GameManager : MonoBehaviour
     }
 
     [Header("Testing & Debug")]
-    [Tooltip("Check this box to force the game to start on the Current Day number below")]
     public bool forceStartingDay = false;
 
     [Header("Facility Systems")]
@@ -126,6 +126,9 @@ public class GameManager : MonoBehaviour
         if (gameOverReasonText != null) gameOverReasonText.text = ruleBreakReason;
         if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlayGlobalSFX("GameOver");
 
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         Time.timeScale = 0f;
     }
 
@@ -147,10 +150,7 @@ public class GameManager : MonoBehaviour
     public void VerifyFurnaceHonesty(int bagsAboutToBurn)
     {
         int totalBagsAfterBurn = bagsBurnedToday + bagsAboutToBurn;
-        if (uiCheckedCount < totalBagsAfterBurn)
-        {
-            TriggerFutureGameOver(RuleBreak.UndocumentedBurn);
-        }
+        if (uiCheckedCount < totalBagsAfterBurn) TriggerFutureGameOver(RuleBreak.UndocumentedBurn);
     }
     public void TriggerTrueEnding()
     {
@@ -168,11 +168,21 @@ public class GameManager : MonoBehaviour
         if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlayGlobalSFX("EndScreen");
 
         if (gameOverCanvas != null) gameOverCanvas.SetActive(true);
-        if (gameOverReasonText != null)
-        {
-            gameOverReasonText.text = "THERMAL DISPOSAL COMPLETE.\nYour service to The Company has been concluded.";
-        }
+        if (gameOverReasonText != null) gameOverReasonText.text = "THERMAL DISPOSAL COMPLETE.\nYour service to The Company has been concluded.";
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
 
         Time.timeScale = 0f;
+    }
+
+    public void ReturnToMainMenu()
+    {
+        Time.timeScale = 1f;
+        globalDay = 1;
+        globalRuleBreakReason = "";
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        SceneManager.LoadScene("MainMenu");
     }
 }

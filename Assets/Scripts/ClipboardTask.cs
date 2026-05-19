@@ -18,55 +18,31 @@ public class ClipboardTask : MonoBehaviour
     void Start()
     {
         gameManager = ServiceLocator.GameManager;
-
-        if (taskText != null)
-        {
-            originalText = taskText.text;
-        }
+        if (taskText != null) originalText = taskText.text;
     }
 
     public void OnCheckboxChanged(bool isChecked)
     {
         if (!isChecked) return;
         if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlayGlobalSFX("PenCheckbox");
-
-        if (taskIndex != gameManager.uiCheckedCount)
-        {
-            GameEvents.OnTriggerGameOver?.Invoke(RuleBreak.OutOfSequence);
-        }
+        if (taskIndex != gameManager.uiCheckedCount) GameEvents.OnTriggerGameOver?.Invoke(RuleBreak.OutOfSequence);
 
         gameManager.uiCheckedCount++;
 
-        if (gameManager.uiCheckedCount > gameManager.physicalWeighedCount)
-        {
-            GameEvents.OnTriggerGameOver?.Invoke(RuleBreak.FalsifiedWeigh);
-        }
-
-        if (checkbox != null)
-        {
-            checkbox.interactable = false;
-        }
+        if (gameManager.uiCheckedCount > gameManager.physicalWeighedCount) GameEvents.OnTriggerGameOver?.Invoke(RuleBreak.FalsifiedWeigh);
+        if (checkbox != null) checkbox.interactable = false;
     }
 
     public void ToggleBurnedStatus()
     {
         if (isBurned) return;
         if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlayGlobalSFX("PenCrossout");
-
-        if (taskIndex != gameManager.uiCrossedOutCount)
-        {
-            GameEvents.OnTriggerGameOver?.Invoke(RuleBreak.OutOfSequence);
-        }
+        if (taskIndex != gameManager.uiCrossedOutCount) GameEvents.OnTriggerGameOver?.Invoke(RuleBreak.OutOfSequence);
 
         isBurned = true;
         gameManager.uiCrossedOutCount++;
 
-        if (gameManager.uiCrossedOutCount > gameManager.bagsBurnedToday)
-        {
-            GameEvents.OnTriggerGameOver?.Invoke(RuleBreak.FalsifiedBurn);
-        }
-
+        if (gameManager.uiCrossedOutCount > gameManager.bagsBurnedToday) GameEvents.OnTriggerGameOver?.Invoke(RuleBreak.FalsifiedBurn);
         taskText.text = "<s>" + originalText + "</s>";
-        taskText.color = new Color(0.4f, 0.4f, 0.4f);
     }
 }

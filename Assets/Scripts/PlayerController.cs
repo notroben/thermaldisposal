@@ -51,6 +51,8 @@ public class PlayerController : MonoBehaviour
         controller = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        if (PlayerPrefs.HasKey("Fullscreen")) Screen.fullScreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
     }
 
     void Update()
@@ -62,10 +64,13 @@ public class PlayerController : MonoBehaviour
 
     void MouseLook()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+        float sensitivity = PlayerPrefs.GetFloat("MouseSensitivity", mouseSensitivity);
+        bool invertY = PlayerPrefs.GetInt("InvertY", 0) == 1;
 
-        cameraPitch -= mouseY;
+        float mouseX = Input.GetAxis("Mouse X") * sensitivity;
+        float mouseY = Input.GetAxis("Mouse Y") * sensitivity;
+
+        cameraPitch -= mouseY * (invertY ? -1f : 1f);
         cameraPitch = Mathf.Clamp(cameraPitch, -90f, 90f);
         playerCamera.localRotation = Quaternion.Euler(cameraPitch, 0f, 0f);
 
@@ -74,10 +79,7 @@ public class PlayerController : MonoBehaviour
 
     void HandleCrouch()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.C))
-        {
-            isCrouching = !isCrouching;
-        }
+        if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.C)) isCrouching = !isCrouching;
 
         float targetHeight = isCrouching ? crouchHeight : standingHeight;
         float targetCenter = isCrouching ? -0.5f : 0f;

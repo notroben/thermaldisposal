@@ -13,12 +13,7 @@ public class ScannerTool : MonoBehaviour
     void Update()
     {
         if (!isEquipped) return;
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("ScannerClick", transform.position);
-        }
-
+        if (Input.GetMouseButtonDown(0) && ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("ScannerClick", transform.position);
         if (Input.GetMouseButton(0))
         {
             Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);

@@ -142,30 +142,27 @@ public class PlayerInteraction : MonoBehaviour
         if (heldObject != null)
         {
             ClipboardTool clipboard = heldObject.GetComponent<ClipboardTool>();
-            if (clipboard != null)
+            if (clipboard != null && bottomPromptText != null)
             {
-                if (bottomPromptText != null)
-                {
-                    bottomPromptText.text = clipboard.isFocused ? "[M2] Unfocus | [E] Drop" : "[M1] Focus | [E] Drop";
-                }
+                bottomPromptText.text = clipboard.isFocused ? "[M2] Unfocus | [E] Drop" : "[M1] Focus | [E] Drop";
             }
             else
             {
                 IronPoker poker = heldObject.GetComponent<IronPoker>();
-                if (poker != null)
+                if (poker != null && bottomPromptText != null)
                 {
-                    if (bottomPromptText != null) bottomPromptText.text = "[M1] Poke | [E] Drop";
+                    bottomPromptText.text = "[M1] Poke | [E] Drop";
                 }
                 else
                 {
                     ScannerTool scanner = heldObject.GetComponent<ScannerTool>();
-                    if (scanner != null)
+                    if (scanner != null && bottomPromptText != null)
                     {
-                        if (bottomPromptText != null) bottomPromptText.text = "[Hold M1] Scan | [E] Drop";
+                        bottomPromptText.text = "[Hold M1] Scan | [E] Drop";
                     }
-                    else
+                    else if (bottomPromptText != null)
                     {
-                        if (bottomPromptText != null) bottomPromptText.text = "[E] Drop";
+                        bottomPromptText.text = "[E] Drop";
                     }
                 }
             }
@@ -352,7 +349,6 @@ public class PlayerInteraction : MonoBehaviour
         {
             isHoldingTool = true;
             if (heldObjRb != null) heldObjRb.isKinematic = true;
-
             if (heldObjColliders != null) foreach (Collider col in heldObjColliders) col.isTrigger = true;
 
             heldObject.transform.SetParent(transform);

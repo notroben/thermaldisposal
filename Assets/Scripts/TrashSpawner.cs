@@ -34,16 +34,9 @@ public class TrashSpawner : MonoBehaviour
         {
             DayData config = gameManager.CurrentDayData;
             
-            if (config.randomOrganicCount > 0) 
-                GenerateRandomIndices(randomOrganicIndices, config.randomOrganicCount);
-                
-            if (config.randomOverCapacityCount > 0)
-                GenerateRandomIndices(randomOverCapacityIndices, config.randomOverCapacityCount);
-
-            if (config.spawnEmptyBag && emptyBagPrefab != null && emptyBagSpawnPoint != null)
-            {
-                Instantiate(emptyBagPrefab, emptyBagSpawnPoint.position, Quaternion.identity);
-            }
+            if (config.randomOrganicCount > 0) GenerateRandomIndices(randomOrganicIndices, config.randomOrganicCount);
+            if (config.randomOverCapacityCount > 0) GenerateRandomIndices(randomOverCapacityIndices, config.randomOverCapacityCount);
+            if (config.spawnEmptyBag && emptyBagPrefab != null && emptyBagSpawnPoint != null) Instantiate(emptyBagPrefab, emptyBagSpawnPoint.position, Quaternion.identity);
         }
 
         SetRandomInterval();
@@ -93,22 +86,11 @@ public class TrashSpawner : MonoBehaviour
         if (spawnHeavy && overCapacityBagPrefab != null)
         {
             newBag = Instantiate(overCapacityBagPrefab, transform.position, Quaternion.identity);
-
-            // Assign a random excess trash prefab to this bag
             TrashBag_data data = newBag.GetComponent<TrashBag_data>();
-            if (data != null && excessTrashPrefabs.Length > 0)
-            {
-                data.excessTrashPrefab = excessTrashPrefabs[Random.Range(0, excessTrashPrefabs.Length)];
-            }
+            if (data != null && excessTrashPrefabs.Length > 0) data.excessTrashPrefab = excessTrashPrefabs[Random.Range(0, excessTrashPrefabs.Length)];
         }
-        else if (spawnOrganic)
-        {
-            newBag = Instantiate(organicBagPrefab, transform.position, Quaternion.identity);
-        }
-        else
-        {
-            newBag = Instantiate(trashBagPrefab, transform.position, Quaternion.identity);
-        }
+        else if (spawnOrganic) newBag = Instantiate(organicBagPrefab, transform.position, Quaternion.identity);
+        else newBag = Instantiate(trashBagPrefab, transform.position, Quaternion.identity);
     }
 
     void SetRandomInterval()

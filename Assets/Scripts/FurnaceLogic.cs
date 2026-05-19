@@ -31,10 +31,7 @@ public class FurnaceLogic : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         GameObject resolved = ResolveObject(other);
-        if (resolved != null && !itemsInside.Contains(resolved))
-        {
-            itemsInside.Add(resolved);
-        }
+        if (resolved != null && !itemsInside.Contains(resolved)) itemsInside.Add(resolved);
     }
 
     void OnTriggerExit(Collider other)
@@ -51,8 +48,7 @@ public class FurnaceLogic : MonoBehaviour
         DebrisLogic debris = col.GetComponentInParent<DebrisLogic>();
         if (debris != null) return debris.gameObject;
 
-        if (col.CompareTag("Player") || col.CompareTag("Tool") || col.CompareTag("ExcessTrash"))
-            return col.gameObject;
+        if (col.CompareTag("Player") || col.CompareTag("Tool") || col.CompareTag("ExcessTrash")) return col.gameObject;
 
         return null;
     }
@@ -73,7 +69,6 @@ public class FurnaceLogic : MonoBehaviour
         if (!isDoorClosed)
         {
             Debug.Log("SYSTEM WARNING: Thermal Disposal unit cannot activate while safety door is ajar.");
-            // if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("ErrorBeep", transform.position);
             return;
         }
 
@@ -89,7 +84,7 @@ public class FurnaceLogic : MonoBehaviour
         {
             ServiceLocator.AudioManager.PlaySFXAtPosition("FurnaceSwitch", transform.position);
             ServiceLocator.AudioManager.PlaySFXAtPosition("FurnaceRoar", transform.position);
-        } 
+        }
 
         itemsInside.RemoveAll(item => item == null || !item.activeInHierarchy || !HasAnyActiveCollider(item));
 
@@ -104,7 +99,6 @@ public class FurnaceLogic : MonoBehaviour
         }
 
         if (bagsToBurn > 0 && charredDebrisCount > 0) GameEvents.OnTriggerGameOver?.Invoke(RuleBreak.FurnaceJammedDebris);
-
         if (bagsToBurn > 0 && ServiceLocator.GameManager != null) ServiceLocator.GameManager.VerifyFurnaceHonesty(bagsToBurn);
 
         List<GameObject> pendingDebris = new List<GameObject>();
@@ -112,24 +106,16 @@ public class FurnaceLogic : MonoBehaviour
         for (int i = itemsInside.Count - 1; i >= 0; i--)
         {
             GameObject item = itemsInside[i];
-
-            if (item.CompareTag("Player") && ServiceLocator.GameManager.CurrentDayData.isFinalDay)
-            {
-                TriggerEndingSequence();
-            }
+            if (item.CompareTag("Player") && ServiceLocator.GameManager.CurrentDayData.isFinalDay) TriggerEndingSequence();
             else if (item.CompareTag("Tool"))
             {
                 GameEvents.OnTriggerGameOver?.Invoke(RuleBreak.PropertyDestruction);
                 Destroy(item);
             }
-            else if (item.GetComponent<DebrisLogic>() != null)
-            {
-                item.GetComponent<DebrisLogic>().CharDebris();
-            }
+            else if (item.GetComponent<DebrisLogic>() != null) item.GetComponent<DebrisLogic>().CharDebris();
             else if (item.GetComponent<TrashBag_data>() != null)
             {
                 TrashBag_data bagData = item.GetComponent<TrashBag_data>();
-
                 if (bagData.bagWeight == TrashBag_data.WeightCategory.OverCapacity)
                 {
                     GameEvents.OnTriggerGameOver?.Invoke(RuleBreak.FurnaceJammedOverCapacity);
@@ -141,15 +127,8 @@ public class FurnaceLogic : MonoBehaviour
                         pendingDebris.Add(debris);
                     }
                 }
-
-                if (bagData.isOrganic)
-                {
-                    Debug.Log("AUDIO TRIGGER: Play organic matter scream SFX");
-                    if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("OrganicScream", transform.position);
-                }
-
+                if (bagData.isOrganic && ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("OrganicScream", transform.position);
                 if (ServiceLocator.GameManager != null) ServiceLocator.GameManager.AddBurnedBag(bagData);
-
                 if (ServiceLocator.GameManager != null && ServiceLocator.GameManager.CurrentDayData != null && ServiceLocator.GameManager.CurrentDayData.hasCharredDebris && day6CharredDebrisPrefabs.Length > 0)
                 {
                     for (int j = 0; j < 2; j++)
@@ -179,10 +158,7 @@ public class FurnaceLogic : MonoBehaviour
     public void SetDoorState(bool closedState)
     {
         isDoorClosed = closedState;
-        if (ServiceLocator.AudioManager != null)
-        {
-            ServiceLocator.AudioManager.PlaySFXAtPosition(isDoorClosed ? "FurnaceDoorClose" : "FurnaceDoorOpen", transform.position);
-        }
+        if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition(isDoorClosed ? "FurnaceDoorClose" : "FurnaceDoorOpen", transform.position);
 
         if (ServiceLocator.GameManager != null && ServiceLocator.GameManager.CurrentDayData != null && ServiceLocator.GameManager.CurrentDayData.isFinalDay && isDoorClosed && !endingTriggered)
         {
@@ -201,10 +177,6 @@ public class FurnaceLogic : MonoBehaviour
     void TriggerEndingSequence()
     {
         Debug.Log("SYSTEM: Final Protocol Initiated. Commencing Employee Execution.");
-
-        if (ServiceLocator.GameManager != null)
-        {
-            ServiceLocator.GameManager.TriggerTrueEnding();
-        }
+        if (ServiceLocator.GameManager != null) ServiceLocator.GameManager.TriggerTrueEnding();
     }
 }

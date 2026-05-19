@@ -19,6 +19,15 @@ public class ExitDoor : MonoBehaviour
     public float fadeSpeed = 1f;
     private bool isFading = false;
 
+    void Start()
+    {
+        if (fadeScreen != null)
+        {
+            fadeScreen.color = new Color(0, 0, 0, 1f);
+            StartCoroutine(FadeInRoutine());
+        }
+    }
+
     void Update()
     {
         if (isFading) return;
@@ -28,29 +37,31 @@ public class ExitDoor : MonoBehaviour
             currentHoldTime += Time.deltaTime;
             float holdProgress = currentHoldTime / requiredHoldTime;
 
-            if (holdIndicator != null)
-            {
-                holdIndicator.fillAmount = holdProgress;
-            }
-
-            if (currentHoldTime >= requiredHoldTime)
-            {
-                StartCoroutine(EndShiftRoutine());
-            }
+            if (holdIndicator != null) holdIndicator.fillAmount = holdProgress;
+            if (currentHoldTime >= requiredHoldTime) StartCoroutine(EndShiftRoutine());
         }
         else
         {
             currentHoldTime = 0f;
-            if (holdIndicator != null)
-            {
-                holdIndicator.fillAmount = 0f;
-            }
+            if (holdIndicator != null) holdIndicator.fillAmount = 0f;
         }
     }
 
     public void SetPlayerLooking(bool looking)
     {
         isPlayerLooking = looking;
+    }
+
+    IEnumerator FadeInRoutine()
+    {
+        float alpha = 1f;
+        while (alpha > 0f)
+        {
+            alpha -= Time.deltaTime * fadeSpeed;
+            fadeScreen.color = new Color(0, 0, 0, alpha);
+            yield return null;
+        }
+        fadeScreen.color = new Color(0, 0, 0, 0);
     }
 
     IEnumerator EndShiftRoutine()
@@ -70,10 +81,7 @@ public class ExitDoor : MonoBehaviour
         bool quotaMet = gameManager.bagsBurnedToday >= gameManager.dailyQuota;
         bool paperworkDone = gameManager.uiCrossedOutCount >= gameManager.dailyQuota && gameManager.uiCheckedCount >= gameManager.dailyQuota;
 
-        if (!quotaMet || !paperworkDone)
-        {
-            GameEvents.OnTriggerGameOver?.Invoke(RuleBreak.ShiftAbandonment);
-        }
+        if (!quotaMet || !paperworkDone) GameEvents.OnTriggerGameOver?.Invoke(RuleBreak.ShiftAbandonment);
 
         if (gameManager.fatalRuleBroken)
         {

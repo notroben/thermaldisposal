@@ -15,7 +15,6 @@ public class EmptyBagLogic : MonoBehaviour
     void Start()
     {
         bagData = GetComponent<TrashBag_data>();
-
         if (bagData != null) bagData.bagWeight = TrashBag_data.WeightCategory.UnderLoad;
 
         if (emptyModel != null) emptyModelStartScale = emptyModel.transform.localScale;
@@ -29,8 +28,7 @@ public class EmptyBagLogic : MonoBehaviour
             Destroy(collision.gameObject);
             currentTrash++;
 
-            if (ServiceLocator.AudioManager != null)
-                ServiceLocator.AudioManager.PlaySFXAtPosition("BagSeal", transform.position);
+            if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("BagSeal", transform.position);
 
             if (currentTrash >= requiredTrash)
             {

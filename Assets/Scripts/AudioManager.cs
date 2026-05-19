@@ -27,24 +27,15 @@ public class AudioManager : MonoBehaviour
 
         foreach (SoundEffect s in sounds)
         {
-            if (!soundDictionary.ContainsKey(s.name))
-            {
-                soundDictionary.Add(s.name, s);
-            }
+            if (!soundDictionary.ContainsKey(s.name)) soundDictionary.Add(s.name, s);
         }
         
-        if (globalAudioSource == null)
-        {
-            globalAudioSource = gameObject.AddComponent<AudioSource>();
-        }
+        if (globalAudioSource == null) globalAudioSource = gameObject.AddComponent<AudioSource>();
     }
 
     private SoundEffect GetSound(string name)
     {
-        if (soundDictionary.TryGetValue(name, out SoundEffect sound))
-        {
-            return sound;
-        }
+        if (soundDictionary.TryGetValue(name, out SoundEffect sound)) return sound;
         Debug.LogWarning("AudioManager: Sound not found: " + name);
         return null;
     }
