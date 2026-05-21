@@ -15,7 +15,7 @@
 
 The core gameplay focuses on **Corporate Compliance**. You must actively complete each task precisely and in order to fulfill your daily quota and avoid termination by The Company's HR System. A stylized retro low-poly aesthetic builds the atmosphere, forcing your imagination to fill in the gaps of the facility's true purpose.
 
-> **Note:** It is highly recommended to read the included `tutorial.pdf` before playing to understand your daily tasks.
+> **Note:** It is highly recommended to read the tutorial file DisposalProtocol.pdf (also available in-game) before playing to understand your daily tasks.
 
 <!-- Add your screenshot paths here -->
 <!-- ![Screenshot 1](path/to/image1.png) -->
@@ -24,7 +24,7 @@ The core gameplay focuses on **Corporate Compliance**. You must actively complet
 ### Features
 
 - **7-Day Work Contract** — Survive a full week of shifts, each introducing new tools, mechanics, and escalating situations.
-- **Fully Diegetic Interface** — Zero traditional HUD. All information exists physically in the game world: a clipboard for tasks, a scanner for analysis, and a weight scale for measurements.
+- **Fully Diegetic Interface** — Zero traditional HUD besides crosshair and prompt texts. All information exists physically in the game world: a clipboard for tasks, a scanner for analysis, and a weight scale for measurements.
 - **Physical Inventory** — You can only hold one item at a time. Managing what you carry and when is part of the challenge.
 - **Strict Procedural Compliance** — Every step must be completed in the exact order. Weigh, document, incinerate, document again. A single misstep triggers a fatal infraction.
 - **Tool Progression** — New tools unlock across the week, each adding a layer to the gameplay loop.
