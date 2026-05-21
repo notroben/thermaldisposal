@@ -2568,7 +2568,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9fcc6e4b29ede9479c3db9fdde3af9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveLoadPanel
-  panelTitleText: {fileID: 0}
   panelTitleImage: {fileID: 1177047371}
   saveSlots:
   - {fileID: 1784407309}
@@ -12154,7 +12153,6 @@ MonoBehaviour:
   slotTitleText: {fileID: 185305830}
   slotDateText: {fileID: 1242490630}
   thumbnailImage: {fileID: 312119290}
-  emptyIcon: {fileID: 0}
   slotButton: {fileID: 523949017}
   deleteButton: {fileID: 1946944817}
   slotIndex: 3
@@ -12837,7 +12835,6 @@ MonoBehaviour:
   slotTitleText: {fileID: 1230365860}
   slotDateText: {fileID: 296789381}
   thumbnailImage: {fileID: 1437719135}
-  emptyIcon: {fileID: 0}
   slotButton: {fileID: 993820187}
   deleteButton: {fileID: 211796123}
   slotIndex: 4
@@ -13150,7 +13147,6 @@ MonoBehaviour:
   slotTitleText: {fileID: 1756083185}
   slotDateText: {fileID: 2054468454}
   thumbnailImage: {fileID: 857303741}
-  emptyIcon: {fileID: 0}
   slotButton: {fileID: 415926199}
   deleteButton: {fileID: 1678934137}
   slotIndex: 2
@@ -13327,8 +13323,8 @@ MonoBehaviour:
   - {fileID: 3678099939951936393, guid: 908c4efda429c4544bf6c2d698faa298, type: 3}
   - {fileID: 7216198821898276528, guid: e0c50a7998925de48af139acd2c4a40e, type: 3}
   maxBags: 10
-  minSpawnTime: 45
-  maxSpawnTime: 75
+  minSpawnTime: 30
+  maxSpawnTime: 60
 --- !u!4 &1651913783
 Transform:
   m_ObjectHideFlags: 0
@@ -14366,7 +14362,6 @@ MonoBehaviour:
   slotTitleText: {fileID: 597983698}
   slotDateText: {fileID: 1162729225}
   thumbnailImage: {fileID: 1903308889}
-  emptyIcon: {fileID: 0}
   slotButton: {fileID: 172723359}
   deleteButton: {fileID: 1186856824}
   slotIndex: 1
