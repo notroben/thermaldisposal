@@ -15,7 +15,7 @@
 
 The core gameplay focuses on **Corporate Compliance**. You must actively complete each task precisely and in order to fulfill your daily quota and avoid termination by The Company's HR System. A stylized retro low-poly aesthetic builds the atmosphere, forcing your imagination to fill in the gaps of the facility's true purpose.
 
-> **Note:** It is highly recommended to read the tutorial (DisposalProtocol.pdf, also available in-game) before playing to understand your daily tasks.
+> **Note:** It is highly recommended to read the tutorial file DisposalProtocol.pdf (also available in-game) before playing to understand your daily tasks.
 
 <!-- Add your screenshot paths here -->
 <!-- ![Screenshot 1](path/to/image1.png) -->
