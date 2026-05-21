@@ -188,17 +188,17 @@ These scripts form the foundation that all other systems depend on.
 
 ```
 Assets/
-  Audio/              Sound effects and music clips
-  DayData/            ScriptableObject assets (Day1.asset – Day8.asset)
-  Fonts/              Custom typefaces (VT323, etc.)
-  Materials/          PBR materials, belt texture, charred material
-  Models/             Low-poly meshes (room, furnace, bags, tools, debris)
-  Prefabs/            Instantiable objects (trashBag, organicBag, emptyBag, excessTrash, debris)
-  Scenes/             MainMenu.unity, SampleScene.unity
+  Audio/              Sound effects
+  DayData/            ScriptableObject assets
+  Fonts/              Custom typefaces
+  Materials/          Materials
+  Models/             Low-poly meshes
+  Prefabs/            Instantiable objects
+  Scenes/             Game scenes/screens
   Scripts/            All 34 C# scripts (documented above)
   Settings/           URP render pipeline settings
   TextMesh Pro/       TMP font assets and shaders
-  Textures/           UI sprites, textures, and designed prompt images
+  Textures/           UI sprites and textures
   _Blender/           Source .blend files for 3D models
 ```
 
