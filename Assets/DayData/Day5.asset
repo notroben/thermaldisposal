@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DayData
   dailyQuota: 11
   directiveText: 'DAY 5 DIRECTIVE:\nProcess 10 disposal units. NOTE: Manually extract
-    excess mass from OVER_CAPACITY units and consolidate into the overflow unit.'
+    excess mass from OVER_CAPACITY units and consolidate into the overflow unit then
+    process it.'
   conveyorBroken: 0
   unlockScanner: 1
   unlockIronPoker: 0
