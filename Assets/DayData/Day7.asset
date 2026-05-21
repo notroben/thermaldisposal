@@ -17,7 +17,7 @@ MonoBehaviour:
   conveyorBroken: 1
   unlockScanner: 1
   unlockIronPoker: 1
-  showTaskList: 1
+  showTaskList: 0
   showExitDoor: 1
   showDay5ExtraTask: 0
   randomOrganicCount: 0

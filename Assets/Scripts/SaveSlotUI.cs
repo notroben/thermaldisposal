@@ -33,7 +33,7 @@ public class SaveSlotUI : MonoBehaviour
         if (isOccupied)
         {
             if (slotTitleText != null) slotTitleText.text = $"GAME SAVE {slotIndex:D2}";
-            if (slotDateText != null) slotDateText.text = data.saveTimestamp;
+            if (slotDateText != null) slotDateText.text = $"Day {data.currentDay} - {data.saveTimestamp}";
 
             Texture2D screenshot = SaveManager.LoadScreenshot(slotIndex);
             if (screenshot != null && thumbnailImage != null)
