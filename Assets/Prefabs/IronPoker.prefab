@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3705699794991296653
+--- !u!1 &5536845830063083481
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,50 +8,51 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9209916087052388423}
-  - component: {fileID: 5948987394580806528}
-  - component: {fileID: 6188649760410091808}
-  - component: {fileID: 4237047881991092155}
-  - component: {fileID: 5711793049897996429}
-  - component: {fileID: 4397442611010656812}
-  - component: {fileID: 6139594991573705001}
+  - component: {fileID: 5572202869022751169}
+  - component: {fileID: 7687751631512438376}
+  - component: {fileID: 8288829705512154211}
+  - component: {fileID: 1230363932562255094}
+  - component: {fileID: 1561793671911245611}
+  - component: {fileID: 7649912587577890712}
+  - component: {fileID: 6402963845529285086}
+  - component: {fileID: 6335099220157363231}
   m_Layer: 3
-  m_Name: excessTrash
-  m_TagString: ExcessTrash
+  m_Name: IronPoker
+  m_TagString: Tool
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &9209916087052388423
+--- !u!4 &5572202869022751169
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3705699794991296653}
+  m_GameObject: {fileID: 5536845830063083481}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_LocalRotation: {x: 0.08715578, y: 0, z: 0, w: 0.9961947}
+  m_LocalPosition: {x: -3.5, y: 1, z: 3.3}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &5948987394580806528
+  m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
+--- !u!33 &7687751631512438376
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3705699794991296653}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &6188649760410091808
+  m_GameObject: {fileID: 5536845830063083481}
+  m_Mesh: {fileID: 1098992564428217686, guid: 5a5334eda612f4d4f9659a23edafa4f6, type: 3}
+--- !u!23 &8288829705512154211
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3705699794991296653}
+  m_GameObject: {fileID: 5536845830063083481}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -70,7 +71,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4d338906e9b321d4b872b01f3b078a02, type: 2}
+  - {fileID: 2100000, guid: a01efd64082872a4fbbbf8a4b42fa1cc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -94,13 +95,13 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4237047881991092155
-BoxCollider:
+--- !u!64 &1230363932562255094
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3705699794991296653}
+  m_GameObject: {fileID: 5536845830063083481}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -112,16 +113,17 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &5711793049897996429
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1098992564428217686, guid: 5a5334eda612f4d4f9659a23edafa4f6, type: 3}
+--- !u!54 &1561793671911245611
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3705699794991296653}
+  m_GameObject: {fileID: 5536845830063083481}
   serializedVersion: 5
   m_Mass: 1
   m_LinearDamping: 0
@@ -142,30 +144,47 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4397442611010656812
+--- !u!114 &7649912587577890712
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3705699794991296653}
+  m_GameObject: {fileID: 5536845830063083481}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66c3e192423ea6b469688517c2a3d588, type: 3}
+  m_Script: {fileID: 11500000, guid: 2731f167d88a17646afa0ca3de5e2b6f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DebrisLogic
-  isCharred: 0
---- !u!114 &6139594991573705001
+  m_EditorClassIdentifier: Assembly-CSharp::IronPoker
+  pokeRange: 4
+  interactableMask:
+    serializedVersion: 2
+    m_Bits: 1
+--- !u!114 &6402963845529285086
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3705699794991296653}
+  m_GameObject: {fileID: 5536845830063083481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9043fdc7db2c05d429a84b93597fbffe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ToolSettings
+  equipPosition: {x: 0.25, y: -0.1, z: 0.3}
+  equipRotation: {x: 90, y: 0, z: 180}
+--- !u!114 &6335099220157363231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5536845830063083481}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce03e9fccd95dda4fb3a9f5dfb849eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CollisionAudio
-  impactSoundName: ObjectCollide
+  impactSoundName: IronPokerCollide
   minImpactForce: 1

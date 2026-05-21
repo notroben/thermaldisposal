@@ -12,6 +12,7 @@ public class MainMenuManager : MonoBehaviour
     public GameObject mainPanel;
     public GameObject settingsPanel;
     public GameObject tutorialPanel;
+    public SaveLoadPanel saveLoadPanel;
 
     private Quaternion cameraStartRot;
 
@@ -28,18 +29,28 @@ public class MainMenuManager : MonoBehaviour
 
     void Update()
     {
-        if (menuCamera == null) return;
+        if (menuCamera != null)
+        {
+            float mouseX = (Input.mousePosition.x / Screen.width - 0.5f) * 2f;
+            float mouseY = (Input.mousePosition.y / Screen.height - 0.5f) * 2f;
 
-        float mouseX = (Input.mousePosition.x / Screen.width - 0.5f) * 2f;
-        float mouseY = (Input.mousePosition.y / Screen.height - 0.5f) * 2f;
+            Quaternion targetRot = cameraStartRot * Quaternion.Euler(
+                -mouseY * parallaxAmount,
+                mouseX * parallaxAmount,
+                0f
+            );
 
-        Quaternion targetRot = cameraStartRot * Quaternion.Euler(
-            -mouseY * parallaxAmount,
-            mouseX * parallaxAmount,
-            0f
-        );
+            menuCamera.rotation = Quaternion.Slerp(menuCamera.rotation, targetRot, Time.deltaTime * parallaxSmoothing);
+        }
 
-        menuCamera.rotation = Quaternion.Slerp(menuCamera.rotation, targetRot, Time.deltaTime * parallaxSmoothing);
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (DevConsole.IsOpen) return;
+
+            if (settingsPanel != null && settingsPanel.activeSelf) OnBackToMain();
+            else if (tutorialPanel != null && tutorialPanel.activeSelf) OnBackToMain();
+            else if (saveLoadPanel != null && saveLoadPanel.gameObject.activeSelf) OnBackToMain();
+        }
     }
 
     public void ShowMainPanel()
@@ -47,6 +58,7 @@ public class MainMenuManager : MonoBehaviour
         if (mainPanel != null) mainPanel.SetActive(true);
         if (settingsPanel != null) settingsPanel.SetActive(false);
         if (tutorialPanel != null) tutorialPanel.SetActive(false);
+        if (saveLoadPanel != null) saveLoadPanel.ClosePanel();
     }
 
     public void OnNewGame()
@@ -58,8 +70,8 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnLoadGame()
     {
-        // placeholder
-        Debug.Log("SYSTEM: Load Game not yet implemented.");
+        if (mainPanel != null) mainPanel.SetActive(false);
+        if (saveLoadPanel != null) saveLoadPanel.OpenPanel(SaveLoadPanel.Mode.Load);
     }
 
     public void OnTutorial()

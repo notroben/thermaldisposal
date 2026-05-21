@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class PauseMenuManager : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class PauseMenuManager : MonoBehaviour
     public GameObject pausePanel;
     public GameObject settingsPanel;
     public GameObject tutorialPanel;
+    public SaveLoadPanel saveLoadPanel;
 
     [Header("Tooltip")]
     public GameObject tooltipObject;
@@ -15,13 +17,18 @@ public class PauseMenuManager : MonoBehaviour
     public GameObject uiCanvas;
 
     private bool isPaused = false;
+    private bool isCapturingScreenshot = false;
 
     void Update()
     {
+        if (DevConsole.IsOpen) return;
+        if (isCapturingScreenshot) return;
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (settingsPanel != null && settingsPanel.activeSelf) OnBackToPause();
             else if (tutorialPanel != null && tutorialPanel.activeSelf) OnBackToPause();
+            else if (saveLoadPanel != null && saveLoadPanel.gameObject.activeSelf) OnBackToPause();
             else TogglePause();
         }
     }
@@ -30,16 +37,35 @@ public class PauseMenuManager : MonoBehaviour
     {
         isPaused = !isPaused;
 
-        if (isPaused) Pause();
+        if (isPaused) StartCoroutine(PauseWithScreenshot());
         else Resume();
     }
 
-    void Pause()
+    IEnumerator PauseWithScreenshot()
     {
+        isCapturingScreenshot = true;
         isPaused = true;
+
+        yield return new WaitForEndOfFrame();
+
+        Texture2D fullScreenshot = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+        fullScreenshot.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
+        fullScreenshot.Apply();
+        if (SaveManager.CachedScreenshot != null) Object.Destroy(SaveManager.CachedScreenshot);
+        SaveManager.CachedScreenshot = SaveManager.ResizeScreenshot(fullScreenshot, 320, 180);
+        Object.Destroy(fullScreenshot);
+
+        isCapturingScreenshot = false;
+
+        DoPause();
+    }
+
+    void DoPause()
+    {
         if (pausePanel != null) pausePanel.SetActive(true);
         if (settingsPanel != null) settingsPanel.SetActive(false);
         if (tutorialPanel != null) tutorialPanel.SetActive(false);
+        if (saveLoadPanel != null) saveLoadPanel.ClosePanel();
         if (uiCanvas != null) uiCanvas.SetActive(false);
         HideTooltip();
 
@@ -57,8 +83,7 @@ public class PauseMenuManager : MonoBehaviour
 
     public void Resume()
     {
-        // Force-unfocus clipboard if held (prevents canLook/canMove desync)
-        PlayerInteraction pi = UnityEngine.Object.FindFirstObjectByType<PlayerInteraction>();
+        PlayerInteraction pi = Object.FindFirstObjectByType<PlayerInteraction>();
         if (pi != null && pi.heldObject != null)
         {
             ClipboardTool clipboard = pi.heldObject.GetComponent<ClipboardTool>();
@@ -69,6 +94,7 @@ public class PauseMenuManager : MonoBehaviour
         if (pausePanel != null) pausePanel.SetActive(false);
         if (settingsPanel != null) settingsPanel.SetActive(false);
         if (tutorialPanel != null) tutorialPanel.SetActive(false);
+        if (saveLoadPanel != null) saveLoadPanel.ClosePanel();
         if (uiCanvas != null) uiCanvas.SetActive(true);
         HideTooltip();
 
@@ -82,6 +108,13 @@ public class PauseMenuManager : MonoBehaviour
             pc.canLook = true;
             pc.canMove = true;
         }
+    }
+
+    public void OnSaveGame()
+    {
+        if (pausePanel != null) pausePanel.SetActive(false);
+        if (saveLoadPanel != null) saveLoadPanel.OpenPanel(SaveLoadPanel.Mode.Save);
+        HideTooltip();
     }
 
     public void OnSettings()
@@ -102,6 +135,7 @@ public class PauseMenuManager : MonoBehaviour
     {
         if (settingsPanel != null) settingsPanel.SetActive(false);
         if (tutorialPanel != null) tutorialPanel.SetActive(false);
+        if (saveLoadPanel != null) saveLoadPanel.ClosePanel();
         if (pausePanel != null) pausePanel.SetActive(true);
         HideTooltip();
     }

@@ -25,8 +25,10 @@ public class PlayerInteraction : MonoBehaviour
     public Transform furnaceDoorHinge;
     public float doorOpenAngle = 90f;
     public float doorSpeed = 5f;
+    public float doorCooldown = 2f;
     private bool isDoorOpen = false;
     private float currentDoorAngle = 0f;
+    private float lastDoorToggleTime = -10f;
 
     [HideInInspector] public GameObject heldObject;
 
@@ -331,6 +333,9 @@ public class PlayerInteraction : MonoBehaviour
             if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlaySFXAtPosition("FurnaceDoorFail", currentHit.point);
             return;
         }
+        
+        if (Time.time - lastDoorToggleTime < doorCooldown) return;
+        lastDoorToggleTime = Time.time;
 
         isDoorOpen = !isDoorOpen;
         GameEvents.OnFurnaceDoorToggled?.Invoke(!isDoorOpen);

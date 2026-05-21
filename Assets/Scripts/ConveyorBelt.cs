@@ -20,7 +20,7 @@ public class ConveyorBelt : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        if (rb == null) Debug.LogWarning("ConveyorBelt requires a Rigidbody component set to Is Kinematic!");
+        if (rb == null) return;
         if (beltRenderer != null) beltMaterial = beltRenderer.material;
     }
 

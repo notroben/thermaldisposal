@@ -41,7 +41,6 @@ public class OrganicJitter : MonoBehaviour
                 }
 
                 float randX = Random.Range(-scaleDistortion, scaleDistortion);
-                // float randY = Random.Range(-scaleDistortion, scaleDistortion);
                 float randZ = Random.Range(-scaleDistortion, scaleDistortion);
                 transform.localScale = originalScale + new Vector3(randX, 0, randZ);
 

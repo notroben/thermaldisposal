@@ -19,12 +19,9 @@ public class DebrisLogic : MonoBehaviour
     public void CharDebris()
     {
         if (isCharred) return;
-
         isCharred = true;
 
-        if (meshRenderers == null || meshRenderers.Length == 0)
-            meshRenderers = GetComponentsInChildren<MeshRenderer>();
-
+        if (meshRenderers == null || meshRenderers.Length == 0) meshRenderers = GetComponentsInChildren<MeshRenderer>();
         ApplyCharVisual();
     }
 
@@ -34,10 +31,8 @@ public class DebrisLogic : MonoBehaviour
         {
             foreach (MeshRenderer mr in meshRenderers)
             {
-                if (charredMaterial != null)
-                    mr.sharedMaterial = charredMaterial;
-                else
-                    mr.material.color = new Color(0.1f, 0.1f, 0.1f);
+                if (charredMaterial != null) mr.sharedMaterial = charredMaterial;
+                else mr.material.color = new Color(0.1f, 0.1f, 0.1f);
             }
         }
 
@@ -50,9 +45,6 @@ public class DebrisLogic : MonoBehaviour
 
     public void Poke()
     {
-        if (isCharred)
-        {
-            Destroy(gameObject);
-        }
+        if (isCharred) Destroy(gameObject);
     }
 }

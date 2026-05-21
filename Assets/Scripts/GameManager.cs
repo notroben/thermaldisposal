@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     {
         globalDay = 1;
         globalRuleBreakReason = "";
+        godMode = false;
     }
 
     [Header("Testing & Debug")]
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Game Over Tracking")]
     public static string globalRuleBreakReason = "";
+    public static bool godMode = false;
     public bool fatalRuleBroken = false;
     public string ruleBreakReason = "";
 
@@ -87,12 +89,7 @@ public class GameManager : MonoBehaviour
     void SetupMorningShift()
     {
         DayData config = CurrentDayData;
-        if (config == null)
-        {
-            Debug.LogWarning("No DayData assigned for current day: " + currentDay);
-            return;
-        }
-
+        if (config == null) return;
         if (conveyorBelt != null) conveyorBelt.isBroken = config.conveyorBroken;
 
         dailyQuota = config.dailyQuota;
@@ -141,6 +138,11 @@ public class GameManager : MonoBehaviour
 
     public void TriggerFutureGameOver(string reason)
     {
+        if (godMode)
+        {
+            Debug.Log("GOD MODE: Ignored infraction - " + reason);
+            return;
+        }
         fatalRuleBroken = true;
         ruleBreakReason = reason;
         globalRuleBreakReason = reason;
@@ -159,14 +161,11 @@ public class GameManager : MonoBehaviour
     IEnumerator TrueEndingRoutine()
     {
         yield return new WaitForSeconds(2f);
-
-        Debug.Log("AUDIO TRIGGER: Play True Ending Furnace Roar SFX");
         if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlayGlobalSFX("FurnaceRoar");
 
         yield return new WaitForSeconds(0.5f);
 
         if (ServiceLocator.AudioManager != null) ServiceLocator.AudioManager.PlayGlobalSFX("EndScreen");
-
         if (gameOverCanvas != null) gameOverCanvas.SetActive(true);
         if (gameOverReasonText != null) gameOverReasonText.text = "THERMAL DISPOSAL COMPLETE.\nYour service to The Company has been concluded.";
 

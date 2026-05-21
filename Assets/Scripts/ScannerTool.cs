@@ -37,7 +37,7 @@ public class ScannerTool : MonoBehaviour
                 if (!hasScanned)
                 {
                     float percent = (currentScanTime / scanTime) * 100f;
-                    screenText.text = "SCANNING...\n" + percent.ToString("F0") + "%";
+                    screenText.text = "SCANNING\n" + percent.ToString("F0") + "%";
 
                     if (currentScanTime >= scanTime)
                     {

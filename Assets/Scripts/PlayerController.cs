@@ -32,6 +32,9 @@ public class PlayerController : MonoBehaviour
 
     private bool isCrouching = false;
 
+    [HideInInspector] public Vector3 conveyorVelocity = Vector3.zero;
+    [HideInInspector] public bool noclipEnabled = false;
+
     private CharacterController controller;
     private float velocityY = 0f;
     private bool isGrounded;
@@ -79,7 +82,12 @@ public class PlayerController : MonoBehaviour
 
     void HandleCrouch()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.C)) isCrouching = !isCrouching;
+        if (noclipEnabled) return;
+        
+        if (canMove)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.C)) isCrouching = !isCrouching;
+        }
 
         float targetHeight = isCrouching ? crouchHeight : standingHeight;
         float targetCenter = isCrouching ? -0.5f : 0f;
@@ -95,6 +103,19 @@ public class PlayerController : MonoBehaviour
 
     void Movement()
     {
+        if (noclipEnabled)
+        {
+            float moveX = Input.GetAxisRaw("Horizontal");
+            float moveZ = Input.GetAxisRaw("Vertical");
+            float moveY = 0f;
+            if (Input.GetKey(KeyCode.Space)) moveY = 1f;
+            if (Input.GetKey(KeyCode.LeftShift)) moveY = -1f;
+
+            Vector3 move = (transform.right * moveX + transform.forward * moveZ + Vector3.up * moveY).normalized;
+            transform.position += move * walkSpeed * Time.deltaTime;
+            return;
+        }
+
         wasGrounded = isGrounded;
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
@@ -109,15 +130,20 @@ public class PlayerController : MonoBehaviour
             velocityY = -2f;
         }
 
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveZ = Input.GetAxisRaw("Vertical");
+        float moveXAxis = Input.GetAxisRaw("Horizontal");
+        float moveZAxis = Input.GetAxisRaw("Vertical");
 
-        Vector3 move = (transform.right * moveX + transform.forward * moveZ).normalized;
+        Vector3 moveDir = (transform.right * moveXAxis + transform.forward * moveZAxis).normalized;
 
         float currentSpeed = isCrouching ? crouchSpeed : walkSpeed;
-        controller.Move(move * currentSpeed * Time.deltaTime);
+        controller.Move(moveDir * currentSpeed * Time.deltaTime);
 
-        if (isGrounded && move.sqrMagnitude > 0.01f)
+        if (conveyorVelocity.sqrMagnitude > 0.001f)
+        {
+            controller.Move(conveyorVelocity * Time.deltaTime);
+        }
+
+        if (isGrounded && moveDir.sqrMagnitude > 0.01f)
         {
             footstepTimer -= Time.deltaTime * (currentSpeed / walkSpeed);
             if (footstepTimer <= 0f)
@@ -126,7 +152,7 @@ public class PlayerController : MonoBehaviour
                 footstepTimer = footstepInterval;
             }
         }
-        else if (!isGrounded || move.sqrMagnitude < 0.01f)
+        else if (!isGrounded || moveDir.sqrMagnitude < 0.01f)
         {
             footstepTimer = 0f;
         }
@@ -139,5 +165,17 @@ public class PlayerController : MonoBehaviour
 
         velocityY += gravity * Time.deltaTime;
         controller.Move(Vector3.up * velocityY * Time.deltaTime);
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        ConveyorBelt belt = other.GetComponentInParent<ConveyorBelt>();
+        if (belt != null && !belt.isBroken) conveyorVelocity = belt.moveDirection.normalized * belt.speed;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        ConveyorBelt belt = other.GetComponentInParent<ConveyorBelt>();
+        if (belt != null) conveyorVelocity = Vector3.zero;
     }
 }

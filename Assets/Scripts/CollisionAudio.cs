@@ -9,10 +9,7 @@ public class CollisionAudio : MonoBehaviour
     {
         if (collision.relativeVelocity.magnitude > minImpactForce)
         {
-            if (ServiceLocator.AudioManager != null)
-            {
-                ServiceLocator.AudioManager.PlaySFXAtPosition(impactSoundName, transform.position);
-            }
+            ServiceLocator.AudioManager.PlaySFXAtPosition(impactSoundName, transform.position);
         }
     }
 }
