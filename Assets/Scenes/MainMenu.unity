@@ -1474,7 +1474,6 @@ MonoBehaviour:
   slotTitleText: {fileID: 2125929222}
   slotDateText: {fileID: 431009196}
   thumbnailImage: {fileID: 852237998}
-  emptyIcon: {fileID: 0}
   slotButton: {fileID: 1490776219}
   deleteButton: {fileID: 1316820727}
   slotIndex: 3
@@ -2425,7 +2424,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 490198488}
         m_TargetAssemblyTypeName: UIClickSFX, Assembly-CSharp
         m_MethodName: PlayClick
         m_Mode: 1
@@ -2694,7 +2693,6 @@ MonoBehaviour:
   slotTitleText: {fileID: 70196316}
   slotDateText: {fileID: 519621229}
   thumbnailImage: {fileID: 1097701763}
-  emptyIcon: {fileID: 0}
   slotButton: {fileID: 989989567}
   deleteButton: {fileID: 917582952}
   slotIndex: 4
@@ -2870,7 +2868,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 490198488}
         m_TargetAssemblyTypeName: UIClickSFX, Assembly-CSharp
         m_MethodName: PlayClick
         m_Mode: 1
@@ -3547,7 +3545,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 490198488}
         m_TargetAssemblyTypeName: UIClickSFX, Assembly-CSharp
         m_MethodName: PlayClick
         m_Mode: 1
@@ -4428,7 +4426,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 490198488}
         m_TargetAssemblyTypeName: UIClickSFX, Assembly-CSharp
         m_MethodName: PlayClick
         m_Mode: 1
@@ -5806,7 +5804,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 490198488}
         m_TargetAssemblyTypeName: UIClickSFX, Assembly-CSharp
         m_MethodName: PlayClick
         m_Mode: 1
@@ -6157,7 +6155,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 490198488}
         m_TargetAssemblyTypeName: UIClickSFX, Assembly-CSharp
         m_MethodName: PlayClick
         m_Mode: 1
@@ -7319,7 +7317,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9fcc6e4b29ede9479c3db9fdde3af9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveLoadPanel
-  panelTitleText: {fileID: 0}
   panelTitleImage: {fileID: 535574230}
   saveSlots:
   - {fileID: 1938897526}
@@ -7569,7 +7566,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 490198488}
         m_TargetAssemblyTypeName: UIClickSFX, Assembly-CSharp
         m_MethodName: PlayClick
         m_Mode: 1
@@ -8064,7 +8061,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 490198488}
         m_TargetAssemblyTypeName: UIClickSFX, Assembly-CSharp
         m_MethodName: PlayClick
         m_Mode: 1
@@ -8361,7 +8358,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 490198488}
         m_TargetAssemblyTypeName: UIClickSFX, Assembly-CSharp
         m_MethodName: PlayClick
         m_Mode: 1
@@ -8791,7 +8788,6 @@ MonoBehaviour:
   slotTitleText: {fileID: 1490895368}
   slotDateText: {fileID: 1392813708}
   thumbnailImage: {fileID: 1356356530}
-  emptyIcon: {fileID: 0}
   slotButton: {fileID: 1188616155}
   deleteButton: {fileID: 384900435}
   slotIndex: 2
@@ -9575,7 +9571,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 490198488}
         m_TargetAssemblyTypeName: UIClickSFX, Assembly-CSharp
         m_MethodName: PlayClick
         m_Mode: 1
@@ -12523,7 +12519,6 @@ MonoBehaviour:
   slotTitleText: {fileID: 1022886485}
   slotDateText: {fileID: 269487459}
   thumbnailImage: {fileID: 276194987}
-  emptyIcon: {fileID: 0}
   slotButton: {fileID: 1357991407}
   deleteButton: {fileID: 579456398}
   slotIndex: 1

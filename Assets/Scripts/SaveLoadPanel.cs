@@ -19,7 +19,7 @@ public class SaveLoadPanel : MonoBehaviour
     public Button confirmYesButton;
     public Button confirmNoButton;
 
-    [Header("Prompt Images (Designed Assets)")]
+    [Header("Prompt Images")]
     public Sprite promptSaveSprite;
     public Sprite promptLoadSprite;
     public Sprite promptDeleteSprite;
