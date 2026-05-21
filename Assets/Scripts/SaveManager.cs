@@ -28,7 +28,7 @@ public static class SaveManager
         {
             slotIndex = slotIndex,
             currentDay = GameManager.globalDay,
-            ruleBreakReason = GameManager.globalRuleBreakReason,
+            ruleBreakReason = "",
             saveTimestamp = System.DateTime.Now.ToString("dd/MM/yyyy HH:mm")
         };
 

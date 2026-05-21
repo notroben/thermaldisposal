@@ -23,8 +23,28 @@ public class DevConsole : MonoBehaviour
     private bool cheatsEnabled = false;
     private bool noclipActive = false;
     private bool godModeActive = false;
+    private bool debugLogEnabled = false;
     private List<string> logLines = new List<string>();
     private float previousTimeScale = 1f;
+
+    void OnEnable()
+    {
+        Application.logMessageReceived += HandleUnityLog;
+    }
+
+    void OnDisable()
+    {
+        Application.logMessageReceived -= HandleUnityLog;
+    }
+
+    void HandleUnityLog(string message, string stackTrace, LogType type)
+    {
+        if (!debugLogEnabled) return;
+        string prefix = type == LogType.Warning ? "[WARN]" : type == LogType.Error ? "[ERR]" : "[LOG]";
+        logLines.Add($"{prefix} {message}");
+        if (logLines.Count > 50) logLines.RemoveAt(0);
+        if (outputText != null) outputText.text = string.Join("\n", logLines);
+    }
 
     void Update()
     {
@@ -118,6 +138,8 @@ public class DevConsole : MonoBehaviour
                 Log("  god              -  Toggle god mode (ignore infractions)");
                 Log("  noclip           -  Toggle noclip (fly through walls)");
                 Log("  listobjects      -  List spawnable object names");
+                Log("  toggledebuglog   -  Toggle game debug log capture");
+                Log("  bagspawntime X Y -  Set bag spawn interval (default: 30 60)");
             }
             return;
         }
@@ -218,6 +240,40 @@ public class DevConsole : MonoBehaviour
                 : "NOCLIP OFF");
             return;
         }
+
+        if (cmd == "toggledebuglog")
+        {
+            debugLogEnabled = !debugLogEnabled;
+            Log(debugLogEnabled
+                ? "DEBUG LOG ON - Game debug logs will appear here."
+                : "DEBUG LOG OFF");
+            return;
+        }
+
+        if (cmd.StartsWith("bagspawntime "))
+        {
+            string[] parts = cmd.Substring("bagspawntime ".Length).Trim().Split(' ');
+            if (parts.Length == 2 && float.TryParse(parts[0], out float minTime) && float.TryParse(parts[1], out float maxTime))
+            {
+                TrashSpawner spawner = FindObjectOfType<TrashSpawner>();
+                if (spawner != null)
+                {
+                    spawner.minSpawnTime = minTime;
+                    spawner.maxSpawnTime = maxTime;
+                    Log($"Bag spawn time set to {minTime}s - {maxTime}s");
+                }
+                else
+                {
+                    Log("ERROR: No TrashSpawner found in scene.");
+                }
+            }
+            else
+            {
+                Log("Usage: bagspawntime <min> <max>  (e.g. bagspawntime 5 10)");
+            }
+            return;
+        }
+
         Log($"Unknown command: {rawCommand}");
     }
 
