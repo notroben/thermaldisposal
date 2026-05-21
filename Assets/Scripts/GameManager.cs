@@ -20,6 +20,13 @@ public class GameManager : MonoBehaviour
         godMode = false;
     }
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    static void InitGlobalSettings()
+    {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
+    }
+
     [Header("Testing & Debug")]
     public bool forceStartingDay = false;
 
@@ -55,8 +62,6 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        Application.targetFrameRate = 60;
-        QualitySettings.vSyncCount = 1;
         ServiceLocator.RegisterGameManager(this);
     }
 
